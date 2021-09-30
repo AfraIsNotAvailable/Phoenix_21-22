@@ -34,10 +34,7 @@ public class Omnidirectional {
     //clasa care sa tina evidenta de fiecare motor,
     //motivu pt care ii clasa e ca arata mai furmus
     private static class Motors{
-        public static DcMotor LF = null; //1 pe poza
-        public static DcMotor RF = null; //2 pe poza
-        public static DcMotor LB = null; //3 pe poza
-        public static DcMotor RB = null; //4 pe poza
+
 
         //vitezele unghiulare la fiecare roata
         public static float W1 = 0;
@@ -94,20 +91,20 @@ public class Omnidirectional {
             if(!powersCalculated)
                 throw new Exception("OmniCalculationError: Powers not calculated."); // nu putem da putere la motoare daca nu s-o calculat puteri
 
-            Motors.LF.setPower(P1);
-            Motors.RF.setPower(P2);
-            Motors.LB.setPower(P3);
-            Motors.RB.setPower(P4);
+            Robot.Motors.LF.setPower(P1);
+            Robot.Motors.RF.setPower(P2);
+            Robot.Motors.LB.setPower(P3);
+            Robot.Motors.RB.setPower(P4);
 
             angularCalculated = false;
             powersCalculated = false;
         }
 
         public static void kill() {
-            Motors.LF.setPower(0);
-            Motors.RF.setPower(0);
-            Motors.LB.setPower(0);
-            Motors.RB.setPower(0);
+            Robot.Motors.LF.setPower(0);
+            Robot.Motors.RF.setPower(0);
+            Robot.Motors.LB.setPower(0);
+            Robot.Motors.RB.setPower(0);
         }
     }
 
@@ -115,14 +112,17 @@ public class Omnidirectional {
     //nu pot explica mai mult it's literally physics
     private static float wheelRadius;
 
+    /*
+    * DEPRECATED
+    * */
     //what does this do
-    public static void SetMotors(DcMotor rb, DcMotor rf, DcMotor lf, DcMotor lb)
-    {
-        Motors.LB = lb;
-        Motors.LF = lf;
-        Motors.RF = rf;
-        Motors.RB = rb;
-    }
+//    public static void SetMotors(DcMotor rb, DcMotor rf, DcMotor lf, DcMotor lb)
+//    {
+//        Robot.Motors.LB = lb;
+//        Robot.Motors.LF = lf;
+//        Robot.Motors.RF = rf;
+//        Robot.Motors.RB = rb;
+//    }
 
 
     //un fel de constructor da nu chiar ca ii clasa statica, OOP elitists would kill me

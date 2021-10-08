@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import java.lang.reflect.Field;
+
 public class Robot {
     public static class Motors{
         public static DcMotor LF = null; //1 pe poza
@@ -92,5 +94,7 @@ public class Robot {
         while (opMode.isOpModeIsActive() && !Robot.Gyroscope.isGyroCalibrated()){}
 
     }
+
+
 
 }

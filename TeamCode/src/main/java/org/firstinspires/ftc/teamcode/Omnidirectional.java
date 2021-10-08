@@ -248,55 +248,31 @@ public class Omnidirectional {
         Motors.setPowers();
     }
 
-    public static void setVelocity(float Vx, float Vy, Callable<Boolean> condition) throws Exception{
+    public static void setVelocity(float Vx, float Vy, Runnable condition) throws Exception{
         //incepem un task now pe thread care asteapta frozen
         //pana cand conditia de exit (condition) retunreaza true
-        scheduler.schedule(() -> {
-            while(true){
-                try {
-                    if (condition.call()) break;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
+        scheduler.schedule(condition, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
 
         calculateAngulars(Vx,Vy,0);
         Motors.calculatePowers(1.f);
         Motors.setPowers();
     }
 
-    public static void setVelocity(float Vx, float Vy,float W, Callable<Boolean> condition) throws Exception{
+    public static void setVelocity(float Vx, float Vy,float W, Runnable condition) throws Exception{
 
         //incepem un task now pe thread care asteapta frozen
         //pana cand conditia de exit (condition) retunreaza true
-        scheduler.schedule(() -> {
-            while(true){
-                try {
-                    if (condition.call()) break;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
+        scheduler.schedule(condition, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
 
         calculateAngulars(Vx,Vy,W);
         Motors.calculatePowers(1.f);
         Motors.setPowers();
     }
 
-    public static void setVelocity(float Vx, float Vy, float W, float limit, Callable<Boolean> condition) throws Exception{
+    public static void setVelocity(float Vx, float Vy, float W, float limit, Runnable condition) throws Exception{
         //incepem un task now pe thread care asteapta frozen
         //pana cand conditia de exit (condition) retunreaza true
-        scheduler.schedule(() -> {
-            while(true){
-                try {
-                    if (condition.call()) break;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
+        scheduler.schedule(condition, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
 
         calculateAngulars(Vx,Vy,W);
         Motors.calculatePowers(limit);

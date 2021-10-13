@@ -13,11 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class Omnidirectional {
 
 
-    //thread pool pt executie pe timp/ executie pe conditii
-    //cu functii lambda(scary shit i know, o sa le explic
-    //la boboci)(lie)
 
-    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     //tine evidenta de axa a si b din schema de pe
     //research paper, pt interesati contactatima da
@@ -91,10 +87,7 @@ public class Omnidirectional {
             if(!powersCalculated)
                 throw new Exception("OmniCalculationError: Powers not calculated."); // nu putem da putere la motoare daca nu s-o calculat puteri
 
-            Robot.Motors.LF.setPower(P1);
-            Robot.Motors.RF.setPower(P2);
-            Robot.Motors.LB.setPower(P3);
-            Robot.Motors.RB.setPower(P4);
+            PowerManager.setTargets(P1,P2,P3,P4);
 
             angularCalculated = false;
             powersCalculated = false;
@@ -221,7 +214,7 @@ public class Omnidirectional {
     public static void setVelocity(float Vx, float Vy, int ms) throws Exception{
         //incepem un task now pe thread care zice cv de genu
         // ba in ms milisecunde tai curentu la motoare :*
-        scheduler.schedule(Motors::kill, ms,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
+        Robot.scheduler.schedule(Motors::kill, ms,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
 
         calculateAngulars(Vx,Vy,0);
         Motors.calculatePowers(1.f);
@@ -231,7 +224,7 @@ public class Omnidirectional {
     public static void setVelocity(float Vx, float Vy,float W, int ms) throws Exception{
         //incepem un task now pe thread care zice cv de genu
         // ba in ms milisecunde tai curentu la motoare :*
-        scheduler.schedule(Motors::kill, ms,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
+        Robot.scheduler.schedule(Motors::kill, ms,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
 
         calculateAngulars(Vx,Vy,W);
         Motors.calculatePowers(1.f);
@@ -241,7 +234,7 @@ public class Omnidirectional {
     public static void setVelocity(float Vx, float Vy, float W, float limit, int ms) throws Exception{
         //incepem un task now pe thread care zice cv de genu
         // ba in ms milisecunde tai curentu la motoare :*
-        scheduler.schedule(Motors::kill, ms,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
+        Robot.scheduler.schedule(Motors::kill, ms,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
 
         calculateAngulars(Vx,Vy,W);
         Motors.calculatePowers(limit);
@@ -251,7 +244,7 @@ public class Omnidirectional {
     public static void setVelocity(float Vx, float Vy, Runnable condition) throws Exception{
         //incepem un task now pe thread care asteapta frozen
         //pana cand conditia de exit (condition) retunreaza true
-        scheduler.schedule(condition, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
+        Robot.scheduler.schedule(condition, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
 
         calculateAngulars(Vx,Vy,0);
         Motors.calculatePowers(1.f);
@@ -262,7 +255,7 @@ public class Omnidirectional {
 
         //incepem un task now pe thread care asteapta frozen
         //pana cand conditia de exit (condition) retunreaza true
-        scheduler.schedule(condition, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
+        Robot.scheduler.schedule(condition, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
 
         calculateAngulars(Vx,Vy,W);
         Motors.calculatePowers(1.f);
@@ -272,7 +265,7 @@ public class Omnidirectional {
     public static void setVelocity(float Vx, float Vy, float W, float limit, Runnable condition) throws Exception{
         //incepem un task now pe thread care asteapta frozen
         //pana cand conditia de exit (condition) retunreaza true
-        scheduler.schedule(condition, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
+        Robot.scheduler.schedule(condition, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
 
         calculateAngulars(Vx,Vy,W);
         Motors.calculatePowers(limit);

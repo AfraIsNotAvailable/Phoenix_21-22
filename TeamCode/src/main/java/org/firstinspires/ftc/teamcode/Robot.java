@@ -7,8 +7,17 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.lang.reflect.Field;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class Robot {
+
+    //thread pool pt executie pe timp/ executie pe conditii
+    //cu functii lambda(scary shit i know, o sa le explic
+    //la boboci)(lie)
+    public static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
+
+
     public static class Motors{
         public static DcMotor LF = null; //1 pe poza
         public static DcMotor RF = null; //2 pe poza

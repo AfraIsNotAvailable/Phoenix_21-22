@@ -9,22 +9,15 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Movement {
-    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 
     //da aceeasi putere la motoare
     public static void setPower(float p){
-        Robot.Motors.LB.setPower(p);
-        Robot.Motors.LF.setPower(p);
-        Robot.Motors.RB.setPower(p);
-        Robot.Motors.RF.setPower(p);
+        PowerManager.setTargets(p,p,p,p);
     }
     //puteri diferite
     public static void setPower(float lf, float rf, float lb, float rb){
-        Robot.Motors.LF.setPower(lf);
-        Robot.Motors.RF.setPower(rf);
-        Robot.Motors.LB.setPower(lb);
-        Robot.Motors.RB.setPower(rb);
+        PowerManager.setTargets(lf,rf,lb,rb);
     }
     //seteaza targetul la motoare
     public static void setTarget(int p){
@@ -66,7 +59,7 @@ public class Movement {
     //initializeaza un thread nou care verifica constant daca conditia s-a indeplinit
     //odata ce se indeplineste opreste motoarele
     public static void runWithCondition(float power, Runnable condition){
-        scheduler.schedule(condition, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
+        Robot.scheduler.schedule(condition, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
         setPower(power);
     }
 

@@ -29,7 +29,7 @@ public class Omnidirectional {
 
     //clasa care sa tina evidenta de fiecare motor,
     //motivu pt care ii clasa e ca arata mai furmus
-    private static class Motors{
+    public static class Motors{
 
 
         //vitezele unghiulare la fiecare roata
@@ -53,15 +53,7 @@ public class Omnidirectional {
         //dau refactor nu sterg decat ce-i useless
         public static float maxAngularVel()
         {
-            if(W1 <= W2 && W1 <= W3 && W1 <= W4)
-                return W1;
-            if(W2 <= W1 && W2 <= W3 && W2 <= W4)
-                return W2;
-            if(W3 <= W1 && W3 <= W2 && W3 <= W4)
-                return W2;
-            if(W4 <= W1 && W4 <= W2 && W4 <= W3)
-                return W2;
-            return W1;
+            return Math.max(Math.max(Motors.W1,Motors.W2),Math.max(Motors.W3,Motors.W4));
         }
 
         //transforma vitezele ungiulare in puteri
@@ -74,10 +66,16 @@ public class Omnidirectional {
 
             float maxW = maxAngularVel();
 
-            Motors.P1 = lim * (Motors.W1 / maxW);
-            Motors.P2 = lim * (Motors.W2 / maxW);
-            Motors.P3 = lim * (Motors.W3 / maxW);
-            Motors.P4 = lim * (Motors.W4 / maxW);
+
+            if(maxW != 0){
+                Motors.P1 = lim * (Motors.W1 / maxW);
+                Motors.P2 = lim * (Motors.W2 / maxW);
+                Motors.P3 = lim * (Motors.W3 / maxW);
+                Motors.P4 = lim * (Motors.W4 / maxW);
+            }else{
+                P1 = P2 = P3 = P4 = 0;
+            }
+
 
             angularCalculated = false;
             powersCalculated = true;
@@ -87,7 +85,7 @@ public class Omnidirectional {
             if(!powersCalculated)
                 throw new Exception("OmniCalculationError: Powers not calculated."); // nu putem da putere la motoare daca nu s-o calculat puteri
 
-            PowerManager.setTargets(P1,P2,P3,P4);
+            PowerManager.setTargets(Motors.P1,Motors.P2,Motors.P3,Motors.P4);
 
             angularCalculated = false;
             powersCalculated = false;
@@ -103,7 +101,7 @@ public class Omnidirectional {
 
     //again, e nevoie de raza rotii pt calcule
     //nu pot explica mai mult it's literally physics
-    private static float wheelRadius;
+    private static float wheelRadius = 3.7f;
 
     /*
     * DEPRECATED
@@ -158,6 +156,9 @@ public class Omnidirectional {
         Motors.W2 *= 1/wheelRadius;
         Motors.W3 *= 1/wheelRadius;
         Motors.W4 *= 1/wheelRadius;
+
+        Motors.angularCalculated = true;
+        Motors.powersCalculated = false;
     }
 
     //urmeaza sase implementari diferite ale lui set velocity cu scopu
@@ -165,7 +166,7 @@ public class Omnidirectional {
 
     public static void setVelocity(float Vx, float Vy) throws Exception {
         calculateAngulars(Vx,Vy,0);
-        Motors.calculatePowers(1.f);
+        Motors.calculatePowers(0.99f);
         Motors.setPowers();
     }
 

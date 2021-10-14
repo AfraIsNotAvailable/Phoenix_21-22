@@ -23,17 +23,29 @@ public class PowerManager {
         public static float sRF = 1;
         public static float sLB = 1;
         public static float sRB = 1;
+
+        public static float dLF = 1;
+        public static float dRF = 1;
+        public static float dLB = 1;
+        public static float dRB = 1;
     }
 
-    public static float step = 0.015f;
+    public static float step = 0.075f;
     public static float nanosecond_step = 100000000.f * 0.95f;
+    public static float delta_step = 10 ;
     public static boolean bRun = true;
 
     public static void setStep(float ns) {
         step = ns;
     }
-
+    public static float weigth = 1;
     public static void setTargets(float tlf, float trf, float tlb, float trb) {
+
+        Motors.dLF = Math.min(Math.max(Math.abs(Motors.tLF - tlf) * delta_step,1),10);
+        Motors.dRF = Math.min(Math.max(Math.abs(Motors.tRF - trf) * delta_step,1),10);
+        Motors.dLB = Math.min(Math.max(Math.abs(Motors.tLB - tlb) * delta_step,1),10);
+        Motors.dRB = Math.min(Math.max(Math.abs(Motors.tRB - trb) * delta_step,1),10);
+
         Motors.tLF= tlf;
         Motors.tRF= trf;
         Motors.tLB= tlb;
@@ -58,6 +70,16 @@ public class PowerManager {
             Motors.sRB = -1;
         else
             Motors.sRB = 1;
+
+        PowerManager.weigth = Math.max(
+                Math.max(
+                        Math.abs(Motors.LF - Motors.tLF),Math.abs(Motors.LB - Motors.tLB)
+                ),
+                Math.max(
+                        Math.abs(Motors.RF - Motors.tRF),Math.abs(Motors.RB - Motors.tRB)
+                )
+        );
+
     }
 
     public static void debugPrintTargets() {
@@ -75,23 +97,30 @@ public class PowerManager {
         Robot.scheduler.schedule(() -> {
 
             float dt = 0;
-            float mint = Math.min(Math.min(Motors.tLF, Motors.tLB),Math.min(Motors.tLF, Motors.tLB));
 
 
             while(bRun) {
                 long startTime = System.nanoTime();
+//                float weigth;
+//                if(Motors.tLB == 0 || Motors.tLF == 0 || Motors.tRB == 0 || Motors.tRF == 0){
+//                    weigth = Math.max(Math.max(Math.abs(Motors.LF - Motors.tLF), Motors.tLB),Math.min(Motors.tRF, Motors.tRB));
+//
+//                }else{
+//                    weigth = Math.min(Math.min(Motors.tLF, Motors.tLB),Math.min(Motors.tRF, Motors.tRB));
+//                }/*((1+ ((1 - Motors.sLF)/2)) * Math.abs(Motors.tLF))*//*((1+ ((1 - Motors.sRF)/2)) * Math.abs(Motors.tRF))*/
+                /*((1+ ((1 - Motors.sLB)/2)) * Math.abs(Motors.tLB))*//*((1+ ((1 - Motors.sRB)/2)) * Math.abs(Motors.tRB))*/
 
                 if(Math.abs(Motors.LF - Motors.tLF) > Math.abs(0.001)) {
-                    Motors.LF += Motors.sLF * (dt * step * ((1+ ((1 - Motors.sLF)/2)) * Math.abs(Motors.tLF))/mint);
+                    Motors.LF += Motors.dLF * Motors.sLF * (dt * step * Math.abs(Motors.LF - Motors.tLF)/weigth);
                 }
                 if(Math.abs(Motors.RF - Motors.tRF) > Math.abs(0.001)) {
-                    Motors.RF += Motors.sRF * (dt * step * ((1+ ((1 - Motors.sRF)/2)) * Math.abs(Motors.tRF))/mint);
+                    Motors.RF += Motors.dRF * Motors.sRF * (dt * step * Math.abs(Motors.RF - Motors.tRF)/weigth);
                 }
                 if(Math.abs(Motors.LB - Motors.tLB) > Math.abs(0.001)) {
-                    Motors.LB += Motors.sLB * (dt * step * ((1+ ((1 - Motors.sLB)/2)) * Math.abs(Motors.tLB))/mint);
+                    Motors.LB += Motors.dLB * Motors.sLB * (dt * step * Math.abs(Motors.LB - Motors.tLB)/weigth);
                 }
                 if(Math.abs(Motors.RB - Motors.tRB) > Math.abs(0.001)) {
-                    Motors.RB += Motors.sRB * (dt * step * ((1+ ((1 - Motors.sRB)/2)) * Math.abs(Motors.tRB))/mint);
+                    Motors.RB += Motors.dRB * Motors.sRB * (dt * step * Math.abs(Motors.RB - Motors.tRB)/weigth);
                 }
 
                 try {
@@ -109,6 +138,7 @@ public class PowerManager {
                 Robot.Motors.RF.setPower(Motors.RF);
                 Robot.Motors.LB.setPower(Motors.LB);
                 Robot.Motors.LF.setPower(Motors.LF);
+
             }
         }, (long)0, TimeUnit.MICROSECONDS);
     }

@@ -53,7 +53,7 @@ public class Omnidirectional {
         //dau refactor nu sterg decat ce-i useless
         public static float maxAngularVel()
         {
-            return Math.max(Math.max(Motors.W1,Motors.W2),Math.max(Motors.W3,Motors.W4));
+            return Math.max(Math.max(Math.abs(W1),Math.abs(W2)),Math.max(Math.abs(W3),Math.abs(W4)));
         }
 
         //transforma vitezele ungiulare in puteri

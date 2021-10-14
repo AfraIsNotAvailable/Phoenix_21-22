@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.teamcode;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -28,23 +27,26 @@ public class PowerManager {
         public static float dRF = 1;
         public static float dLB = 1;
         public static float dRB = 1;
+
+        public static float wLF = 1;
+        public static float wRF = 1;
+        public static float wLB = 1;
+        public static float wRB = 1;
     }
 
-    public static float step = 0.075f;
+    public static float step = 0.07f;
     public static float nanosecond_step = 100000000.f * 0.95f;
-    public static float delta_step = 10 ;
+    public static float delta_step = 3 ;
     public static boolean bRun = true;
 
     public static void setStep(float ns) {
         step = ns;
     }
+
     public static float weigth = 1;
     public static void setTargets(float tlf, float trf, float tlb, float trb) {
 
-        Motors.dLF = Math.min(Math.max(Math.abs(Motors.tLF - tlf) * delta_step,1),10);
-        Motors.dRF = Math.min(Math.max(Math.abs(Motors.tRF - trf) * delta_step,1),10);
-        Motors.dLB = Math.min(Math.max(Math.abs(Motors.tLB - tlb) * delta_step,1),10);
-        Motors.dRB = Math.min(Math.max(Math.abs(Motors.tRB - trb) * delta_step,1),10);
+
 
         Motors.tLF= tlf;
         Motors.tRF= trf;
@@ -80,6 +82,11 @@ public class PowerManager {
                 )
         );
 
+        Motors.wLF = Math.abs(Motors.LF - Motors.tLF);
+        Motors.wRF = Math.abs(Motors.RF - Motors.tRF);
+        Motors.wLB = Math.abs(Motors.LB - Motors.tLB);
+        Motors.wRB = Math.abs(Motors.RB - Motors.tRB);
+
     }
 
     public static void debugPrintTargets() {
@@ -100,27 +107,24 @@ public class PowerManager {
 
 
             while(bRun) {
+                //TODO check to see if it's better if calculated everytime or on setTargets
+                Motors.dLF = Math.min(Math.max(Math.abs(Motors.tLF - Motors.LF) * delta_step,1),10);
+                Motors.dRF = Math.min(Math.max(Math.abs(Motors.tRF - Motors.RF) * delta_step,1),10);
+                Motors.dLB = Math.min(Math.max(Math.abs(Motors.tLB - Motors.LB) * delta_step,1),10);
+                Motors.dRB = Math.min(Math.max(Math.abs(Motors.tRB - Motors.RB) * delta_step,1),10);
                 long startTime = System.nanoTime();
-//                float weigth;
-//                if(Motors.tLB == 0 || Motors.tLF == 0 || Motors.tRB == 0 || Motors.tRF == 0){
-//                    weigth = Math.max(Math.max(Math.abs(Motors.LF - Motors.tLF), Motors.tLB),Math.min(Motors.tRF, Motors.tRB));
-//
-//                }else{
-//                    weigth = Math.min(Math.min(Motors.tLF, Motors.tLB),Math.min(Motors.tRF, Motors.tRB));
-//                }/*((1+ ((1 - Motors.sLF)/2)) * Math.abs(Motors.tLF))*//*((1+ ((1 - Motors.sRF)/2)) * Math.abs(Motors.tRF))*/
-                /*((1+ ((1 - Motors.sLB)/2)) * Math.abs(Motors.tLB))*//*((1+ ((1 - Motors.sRB)/2)) * Math.abs(Motors.tRB))*/
 
                 if(Math.abs(Motors.LF - Motors.tLF) > Math.abs(0.001)) {
-                    Motors.LF += Motors.dLF * Motors.sLF * (dt * step * Math.abs(Motors.LF - Motors.tLF)/weigth);
+                    Motors.LF += Motors.dLF * Motors.sLF * (dt * step * Motors.wLF/weigth);
                 }
                 if(Math.abs(Motors.RF - Motors.tRF) > Math.abs(0.001)) {
-                    Motors.RF += Motors.dRF * Motors.sRF * (dt * step * Math.abs(Motors.RF - Motors.tRF)/weigth);
+                    Motors.RF += Motors.dRF * Motors.sRF * (dt * step * Motors.wRF/weigth);
                 }
                 if(Math.abs(Motors.LB - Motors.tLB) > Math.abs(0.001)) {
-                    Motors.LB += Motors.dLB * Motors.sLB * (dt * step * Math.abs(Motors.LB - Motors.tLB)/weigth);
+                    Motors.LB += Motors.dLB * Motors.sLB * (dt * step * Motors.wLB/weigth);
                 }
                 if(Math.abs(Motors.RB - Motors.tRB) > Math.abs(0.001)) {
-                    Motors.RB += Motors.dRB * Motors.sRB * (dt * step * Math.abs(Motors.RB - Motors.tRB)/weigth);
+                    Motors.RB += Motors.dRB * Motors.sRB * (dt * step * Motors.wRB/weigth);
                 }
 
                 try {
@@ -133,7 +137,6 @@ public class PowerManager {
                 float et = ((float)System.nanoTime() - (float)startTime);
                 dt = et/nanosecond_step;
 
-//                debugPrintTargets();
                 Robot.Motors.RB.setPower(Motors.RB);
                 Robot.Motors.RF.setPower(Motors.RF);
                 Robot.Motors.LB.setPower(Motors.LB);

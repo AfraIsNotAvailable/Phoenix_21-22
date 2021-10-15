@@ -1,6 +1,6 @@
 # Stuff we use & useful links
 
-#### Am salvat ca si ulterior reading material
+#### Am salvat ca si *ulterior reading material*
 
 ## Omni
 

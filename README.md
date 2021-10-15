@@ -1,4 +1,4 @@
-# Stuff we use & useful links and stuff
+# Stuff we use & useful links
 
 #### Am salvat ca si ulterior reading material
 

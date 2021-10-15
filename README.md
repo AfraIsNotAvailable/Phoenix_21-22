@@ -6,6 +6,8 @@
 
 [***Omnidirectional Research Paper***](https://www.researchgate.net/publication/308570348_Inverse_kinematic_implementation_of_four-wheels_mecanum_drive_mobile_robot_using_stepper_motors) - the main research material for the omnidirectional mecanum movement model; articolul care a facut sa existe omni-ul in preaslavit
 
+![reference image for croi's code](/resources/model_kinematic_mecanum.png)
+
 [***The Futut One***](https://research.ijcaonline.org/volume113/number3/pxc3901586.pdf) - inverse kinematics model of mecanum wheels, ceva mai greu de inteles (mult mai greu)
 
 [***Modeling and Kinematics***](https://www.hindawi.com/journals/jr/2018/9373580/) - inca il studiez pe asta dar pe scurt ii un concept de wheelchair care foloseste un model de omni pentru miscare/omni pus in practica

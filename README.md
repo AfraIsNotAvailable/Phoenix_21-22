@@ -1,8 +1,13 @@
 ## Stuff we use & useful links and stuff
 
-***[Omnidirectional Research Paper](https://www.researchgate.net/publication/308570348_Inverse_kinematic_implementation_of_four-wheels_mecanum_drive_mobile_robot_using_stepper_motors)
-[The Futut One](https://research.ijcaonline.org/volume113/number3/pxc3901586.pdf)
-[Modeling and Kinematics](https://www.hindawi.com/journals/jr/2018/9373580/)
+### Am salvat ca si ulterior reading material
+
+[***Omnidirectional Research Paper***](https://www.researchgate.net/publication/308570348_Inverse_kinematic_implementation_of_four-wheels_mecanum_drive_mobile_robot_using_stepper_motors)
+
+[***The Futut One***](https://research.ijcaonline.org/volume113/number3/pxc3901586.pdf)
+
+[***Modeling and Kinematics***](https://www.hindawi.com/journals/jr/2018/9373580/)
+
 
 ---
 

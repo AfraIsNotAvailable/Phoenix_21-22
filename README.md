@@ -6,7 +6,7 @@
 
 [***Omnidirectional Research Paper***](https://www.researchgate.net/publication/308570348_Inverse_kinematic_implementation_of_four-wheels_mecanum_drive_mobile_robot_using_stepper_motors) - the main research material for the omnidirectional mecanum movement model; articolul care a facut sa existe omni-ul in preaslavit
 
-![reference image for croi's code](/resources/model_kinematic_mecanum.png)
+![reference image for croi's code](/resources/model_kinematic_mecanum.PNG)
 
 [***The Futut One***](https://research.ijcaonline.org/volume113/number3/pxc3901586.pdf) - inverse kinematics model of mecanum wheels, ceva mai greu de inteles (mult mai greu)
 

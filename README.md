@@ -1,3 +1,11 @@
+## Stuff we use & useful links and stuff
+
+***[Omnidirectional Research Paper](https://www.researchgate.net/publication/308570348_Inverse_kinematic_implementation_of_four-wheels_mecanum_drive_mobile_robot_using_stepper_motors)
+[The Futut One](https://research.ijcaonline.org/volume113/number3/pxc3901586.pdf)
+[Modeling and Kinematics](https://www.hindawi.com/journals/jr/2018/9373580/)
+
+---
+
 ## NOTICE
 
 This repository contains the public FTC SDK for the Freight Frenzy (2021-2022) competition season.

@@ -34,9 +34,9 @@ public class PowerManager {
         public static float wRB = 1;
     }
 
-    public static float step = 0.07f;
+    public static float step = 0.2f;
     public static float nanosecond_step = 100000000.f * 0.95f;
-    public static float delta_step = 3 ;
+    public static float delta_step = 10 ;
     public static boolean bRun = true;
 
     public static void setStep(float ns) {
@@ -108,10 +108,10 @@ public class PowerManager {
 
             while(bRun) {
                 //TODO check to see if it's better if calculated everytime or on setTargets
-                Motors.dLF = Math.min(Math.max(Math.abs(Motors.tLF - Motors.LF) * delta_step,1),10);
-                Motors.dRF = Math.min(Math.max(Math.abs(Motors.tRF - Motors.RF) * delta_step,1),10);
-                Motors.dLB = Math.min(Math.max(Math.abs(Motors.tLB - Motors.LB) * delta_step,1),10);
-                Motors.dRB = Math.min(Math.max(Math.abs(Motors.tRB - Motors.RB) * delta_step,1),10);
+                Motors.dLF = Math.min(Math.max(Math.abs(Motors.tLF - Motors.LF) * delta_step,1),15);
+                Motors.dRF = Math.min(Math.max(Math.abs(Motors.tRF - Motors.RF) * delta_step,1),15);
+                Motors.dLB = Math.min(Math.max(Math.abs(Motors.tLB - Motors.LB) * delta_step,1),15);
+                Motors.dRB = Math.min(Math.max(Math.abs(Motors.tRB - Motors.RB) * delta_step,1),15);
                 long startTime = System.nanoTime();
 
                 if(Math.abs(Motors.LF - Motors.tLF) > Math.abs(0.001)) {

@@ -31,48 +31,54 @@ public class TestMiscare extends LinearOpMode implements OpModeAddition{
 
     @Override
     public void runOpMode()  {
-        try{
+
             Robot.init(this,hardwareMap);
             Omnidirectional.Init(14.5f,19,3.8f );
             waitForStart();
+            ElapsedTime rt = new ElapsedTime();
+            rt.reset();
             PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
             PowerManager.start();
+            long tm = 0;
+
             float a = 0;
             while (opModeIsActive()){
-//                Omnidirectional.setVelocity(100*(float)Math.cos(a),100*(float)Math.sin(a),0f,0.4f);
+                Omnidirectional.setVelocity(gamepad1.right_stick_x,gamepad1.right_stick_y,0f,1.f);
 //                a+=Math.PI/4;
-//                telemetry.addData("LF ",Omnidirectional.Motors.W1);
-//                telemetry.addData("LB ",Omnidirectional.Motors.W2);
-//                telemetry.addData("RB ",Omnidirectional.Motors.W3);
-//                telemetry.addData("RF ",Omnidirectional.Motors.W4);
-//                telemetry.addData("LF ",Omnidirectional.Motors.P1);
-//                telemetry.addData("LB ",Omnidirectional.Motors.P2);
-//                telemetry.addData("RB ",Omnidirectional.Motors.P3);
-//                telemetry.addData("RF ",Omnidirectional.Motors.P4);
-//                telemetry.addData("LF ",PowerManager.Motors.LF);
-//                telemetry.addData("LB ",PowerManager.Motors.RB);
-//                telemetry.addData("RB ",PowerManager.Motors.RF);
-//                telemetry.addData("RF ",PowerManager.Motors.LB);
-//                telemetry.addData("LF ",PowerManager.Motors.tLF);
-//                telemetry.addData("LB ",PowerManager.Motors.tRB);
-//                telemetry.addData("RB ",PowerManager.Motors.tRF);
-//                telemetry.addData("RF ",PowerManager.Motors.tLB);
-//                telemetry.addData("LF ",PowerManager.Motors.dLF);
-//                telemetry.addData("LB ",PowerManager.Motors.dRB);
-//                telemetry.addData("RB ",PowerManager.Motors.dRF);
-//                telemetry.addData("RF ",PowerManager.Motors.dLB);
 
-                PowerManager.setTargets((float)Math.sin(a),(float)Math.sin(a),(float)Math.sin(a),(float)Math.sin(a));
-                a+=PI/10;
+                telemetry.addData("wLF ",Omnidirectional.Motors.W1);
+                telemetry.addData("wLB ",Omnidirectional.Motors.W2);
+                telemetry.addData("wRB ",Omnidirectional.Motors.W3);
+                telemetry.addData("wRF ",Omnidirectional.Motors.W4);
+                telemetry.addData("pLF ",Omnidirectional.Motors.P1);
+                telemetry.addData("pLB ",Omnidirectional.Motors.P2);
+                telemetry.addData("pRB ",Omnidirectional.Motors.P3);
+                telemetry.addData("pRF ",Omnidirectional.Motors.P4);
+                telemetry.addData("LF ",PowerManager.Motors.LF);
+                telemetry.addData("LB ",PowerManager.Motors.RB);
+                telemetry.addData("RB ",PowerManager.Motors.RF);
+                telemetry.addData("RF ",PowerManager.Motors.LB);
+                telemetry.addData("tLF ",PowerManager.Motors.tLF);
+                telemetry.addData("tLB ",PowerManager.Motors.tRB);
+                telemetry.addData("tRB ",PowerManager.Motors.tRF);
+                telemetry.addData("tRF ",PowerManager.Motors.tLB);
+                telemetry.addData("dLF ",PowerManager.Motors.dLF);
+                telemetry.addData("dLB ",PowerManager.Motors.dRB);
+                telemetry.addData("dRB ",PowerManager.Motors.dRF);
+                telemetry.addData("dRF ",PowerManager.Motors.dLB);
+
+//                PowerManager.setTargets((float)Math.sin(a),(float)Math.sin(a),(float)Math.sin(a),(float)Math.sin(a));
+//                if(rt.milliseconds()>tm){
+//                    a+=0.01;
+//                    tm+=10;
+//                }
+
                 telemetry.update();
-                sleep(100 );
+                //sleep(100 );
 
             }
             PowerManager.reset();
-        }catch (Exception e){
-            telemetry.addData(e.getStackTrace().toString(),0);
-            telemetry.update();
-        }
+
 
 
     }

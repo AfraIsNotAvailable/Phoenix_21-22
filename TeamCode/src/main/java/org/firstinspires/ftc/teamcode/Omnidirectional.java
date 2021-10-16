@@ -59,10 +59,10 @@ public class Omnidirectional {
         //transforma vitezele ungiulare in puteri
         //cuprinse in I = [0,1], sau intre [0,lim]
         //unde lim cuprins inte [0,1]
-        public static void calculatePowers(float lim) throws Exception {
+        public static void calculatePowers(float lim)  {
             //dam excpetie daca nu avem calculate veiteze noi
-            if(!angularCalculated)
-                throw new Exception("OmniCalculationError: Angular velocities not calculated before recalculating powers.");
+            //if(!angularCalculated)
+              //  throw new Exception("OmniCalculationError: Angular velocities not calculated before recalculating powers.");
 
             float maxW = maxAngularVel();
 
@@ -81,12 +81,10 @@ public class Omnidirectional {
             powersCalculated = true;
         }
 
-        public static void setPowers() throws Exception{
-            if(!powersCalculated)
-                throw new Exception("OmniCalculationError: Powers not calculated."); // nu putem da putere la motoare daca nu s-o calculat puteri
-
+        public static void setPowers() {
             PowerManager.setTargets(Motors.P1,Motors.P2,Motors.P3,Motors.P4);
-
+            //if(!powersCalculated)
+              //  throw new Exception("OmniCalculationError: Powers not calculated."); // nu putem da putere la motoare daca nu s-o calculat puteri
             angularCalculated = false;
             powersCalculated = false;
         }
@@ -127,7 +125,7 @@ public class Omnidirectional {
     // calculeaza viteza unghiulara pt a se aplica forta V si rotatia W
     // le baga in Motors, unde se tine evidenta datelor fiecarui motor
     // Vx si Vy is forta descompusa
-    public static void calculateAngulars(float Vx, float Vy, float W)
+    public static void calculateAngulars(float Vy, float Vx, float W)
     {
         Motors.W1 = Vx - Vy - (AXIS.A + AXIS.B) * W;
         Motors.W2 = Vx + Vy + (AXIS.A + AXIS.B) * W;
@@ -164,19 +162,19 @@ public class Omnidirectional {
     //urmeaza sase implementari diferite ale lui set velocity cu scopu
     //de a acoperii toate cazurile de care maybe ai nevoie idk????????
 
-    public static void setVelocity(float Vx, float Vy) throws Exception {
+    public static void setVelocity(float Vx, float Vy)  {
         calculateAngulars(Vx,Vy,0);
-        Motors.calculatePowers(0.99f);
+        Motors.calculatePowers(1f);
         Motors.setPowers();
     }
 
-    public static void setVelocity(float Vx, float Vy, float W) throws Exception {
+    public static void setVelocity(float Vx, float Vy, float W)  {
         calculateAngulars(Vx,Vy,W);
         Motors.calculatePowers(1.f);
         Motors.setPowers();
     }
 
-    public static void setVelocity(float Vx, float Vy, float W, float limit) throws Exception {
+    public static void setVelocity(float Vx, float Vy, float W, float limit)  {
         //explic numa aici ca dupa is intuitive
 
         //se calculeaza intai vitezele angulare pt targetu V si W,
@@ -194,25 +192,25 @@ public class Omnidirectional {
         Motors.setPowers();
     }
 
-    public static void setVelocity(Vector2D V) throws Exception {
+    public static void setVelocity(Vector2D V)  {
         calculateAngulars(V,0);
         Motors.calculatePowers(1.f);
         Motors.setPowers();
     }
 
-    public static void setVelocity(Vector2D V, float W) throws Exception {
+    public static void setVelocity(Vector2D V, float W)  {
         calculateAngulars(V,W);
         Motors.calculatePowers(1.f);
         Motors.setPowers();
     }
 
-    public static void setVelocity(Vector2D V, float W, float limit) throws Exception {
+    public static void setVelocity(Vector2D V, float W, float limit)  {
         calculateAngulars(V,W);
         Motors.calculatePowers(limit);
         Motors.setPowers();
     }
 
-    public static void setVelocity(float Vx, float Vy, int ms) throws Exception{
+    public static void setVelocity(float Vx, float Vy, int ms) {
         //incepem un task now pe thread care zice cv de genu
         // ba in ms milisecunde tai curentu la motoare :*
         Robot.scheduler.schedule(Motors::kill, ms,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
@@ -222,7 +220,7 @@ public class Omnidirectional {
         Motors.setPowers();
     }
 
-    public static void setVelocity(float Vx, float Vy,float W, int ms) throws Exception{
+    public static void setVelocity(float Vx, float Vy,float W, int ms) {
         //incepem un task now pe thread care zice cv de genu
         // ba in ms milisecunde tai curentu la motoare :*
         Robot.scheduler.schedule(Motors::kill, ms,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
@@ -232,7 +230,7 @@ public class Omnidirectional {
         Motors.setPowers();
     }
 
-    public static void setVelocity(float Vx, float Vy, float W, float limit, int ms) throws Exception{
+    public static void setVelocity(float Vx, float Vy, float W, float limit, int ms) {
         //incepem un task now pe thread care zice cv de genu
         // ba in ms milisecunde tai curentu la motoare :*
         Robot.scheduler.schedule(Motors::kill, ms,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
@@ -242,7 +240,7 @@ public class Omnidirectional {
         Motors.setPowers();
     }
 
-    public static void setVelocity(float Vx, float Vy, Runnable condition) throws Exception{
+    public static void setVelocity(float Vx, float Vy, Runnable condition) {
         //incepem un task now pe thread care asteapta frozen
         //pana cand conditia de exit (condition) retunreaza true
         Robot.scheduler.schedule(condition, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
@@ -252,7 +250,7 @@ public class Omnidirectional {
         Motors.setPowers();
     }
 
-    public static void setVelocity(float Vx, float Vy,float W, Runnable condition) throws Exception{
+    public static void setVelocity(float Vx, float Vy,float W, Runnable condition) {
 
         //incepem un task now pe thread care asteapta frozen
         //pana cand conditia de exit (condition) retunreaza true
@@ -263,7 +261,7 @@ public class Omnidirectional {
         Motors.setPowers();
     }
 
-    public static void setVelocity(float Vx, float Vy, float W, float limit, Runnable condition) throws Exception{
+    public static void setVelocity(float Vx, float Vy, float W, float limit, Runnable condition) {
         //incepem un task now pe thread care asteapta frozen
         //pana cand conditia de exit (condition) retunreaza true
         Robot.scheduler.schedule(condition, 0,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol

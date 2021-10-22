@@ -46,26 +46,6 @@ public class TestMiscare extends LinearOpMode implements OpModeAddition{
                 Omnidirectional.setVelocity(gamepad1.right_stick_x,gamepad1.right_stick_y,0f,1.f);
 //                a+=Math.PI/4;
 
-                telemetry.addData("wLF ",Omnidirectional.Motors.W1);
-                telemetry.addData("wLB ",Omnidirectional.Motors.W2);
-                telemetry.addData("wRB ",Omnidirectional.Motors.W3);
-                telemetry.addData("wRF ",Omnidirectional.Motors.W4);
-                telemetry.addData("pLF ",Omnidirectional.Motors.P1);
-                telemetry.addData("pLB ",Omnidirectional.Motors.P2);
-                telemetry.addData("pRB ",Omnidirectional.Motors.P3);
-                telemetry.addData("pRF ",Omnidirectional.Motors.P4);
-                telemetry.addData("LF ",PowerManager.Motors.LF);
-                telemetry.addData("LB ",PowerManager.Motors.RB);
-                telemetry.addData("RB ",PowerManager.Motors.RF);
-                telemetry.addData("RF ",PowerManager.Motors.LB);
-                telemetry.addData("tLF ",PowerManager.Motors.tLF);
-                telemetry.addData("tLB ",PowerManager.Motors.tRB);
-                telemetry.addData("tRB ",PowerManager.Motors.tRF);
-                telemetry.addData("tRF ",PowerManager.Motors.tLB);
-                telemetry.addData("dLF ",PowerManager.Motors.dLF);
-                telemetry.addData("dLB ",PowerManager.Motors.dRB);
-                telemetry.addData("dRB ",PowerManager.Motors.dRF);
-                telemetry.addData("dRF ",PowerManager.Motors.dLB);
 
 //                PowerManager.setTargets((float)Math.sin(a),(float)Math.sin(a),(float)Math.sin(a),(float)Math.sin(a));
 //                if(rt.milliseconds()>tm){

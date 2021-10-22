@@ -18,7 +18,7 @@ public class Robot {
     public static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
 
 
-    public static class Motors{
+    public static class Motors {
         public static DcMotor LF = null; //1 pe poza
         public static DcMotor RF = null; //2 pe poza
         public static DcMotor LB = null; //3 pe poza
@@ -30,7 +30,7 @@ public class Robot {
     public static HardwareMap hMap = null;
     public static OpModeAddition opMode = null;
 
-    public  static void init(OpModeAddition om, HardwareMap m) {
+    public static void init(OpModeAddition om, HardwareMap m) {
         Robot.opMode = om;
         Robot.hMap = m;
 
@@ -45,7 +45,7 @@ public class Robot {
 
     private static void doMotorsSetup() throws Exception {
         if(Motors.LB == null && Motors.LF == null && Motors.RB == null && Motors.RF == null)
-            throw  new Exception("a motor was null in doMotorsSetup()");
+            throw new Exception("a motor was null in doMotorsSetup()");
 
         Motors.LB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Motors.LF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -81,7 +81,6 @@ public class Robot {
 
         if(Robot.Gyroscope == null)
             Robot.Gyroscope = Robot.hMap.get(BNO055IMU.class , "imu" );
-
     }
 
     private static void doGyroscopeSetup() throws Exception{

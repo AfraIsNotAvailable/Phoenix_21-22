@@ -43,8 +43,16 @@ public class TestMiscare extends LinearOpMode implements OpModeAddition{
 
             float a = 0;
             while (opModeIsActive()){
-                Omnidirectional.setVelocity(gamepad1.right_stick_x,gamepad1.right_stick_y,0f,1.f);
+               Omnidirectional.setVelocity(gamepad1.right_stick_x,gamepad1.right_stick_y,0f,.5f);
 //                a+=Math.PI/4;
+
+                if(gamepad1.a){
+                    PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
+                    Robot.Motors.RB.setPower(0);
+                    Robot.Motors.LF.setPower(0);
+                    Robot.Motors.LB.setPower(0);
+                    Robot.Motors.RF.setPower(0);
+                }
 
                 telemetry.addData("wLF ",Omnidirectional.Motors.W1);
                 telemetry.addData("wLB ",Omnidirectional.Motors.W2);

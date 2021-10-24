@@ -1,10 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.Executors;
@@ -29,6 +35,11 @@ public class Robot {
 
     public static HardwareMap hMap = null;
     public static OpModeAddition opMode = null;
+
+    public static ModernRoboticsI2cRangeSensor R1;
+    public static ModernRoboticsI2cRangeSensor R2;
+    public static ModernRoboticsI2cRangeSensor R3;
+    public static ModernRoboticsI2cRangeSensor R4;
 
     public  static void init(OpModeAddition om, HardwareMap m) {
         Robot.opMode = om;
@@ -104,6 +115,22 @@ public class Robot {
 
     }
 
+    public static void doRangerSetup(){
+         try{
+             Robot.R1 = Robot.hMap.get(ModernRoboticsI2cRangeSensor.class,"R1");
+             Robot.R2 = Robot.hMap.get(ModernRoboticsI2cRangeSensor.class,"R2");
+             Robot.R3 = Robot.hMap.get(ModernRoboticsI2cRangeSensor.class,"R3");
+             Robot.R4 = Robot.hMap.get(ModernRoboticsI2cRangeSensor.class,"R4");
+         }catch (Exception e){
+             RangerPositioning.healthyRangers = false;
+         }
+    }
+
+    public static float getAngle(){
+        Orientation angles = Robot.Gyroscope.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        return (angles.firstAngle + 90) % 360;
+    }
 
 
 }

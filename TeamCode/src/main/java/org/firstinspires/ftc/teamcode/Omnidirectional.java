@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-
-
 import com.qualcomm.robotcore.hardware.DcMotor;
-
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
@@ -13,8 +10,6 @@ import java.util.concurrent.TimeUnit;
 public class Omnidirectional {
 
 
-
-
     //tine evidenta de axa a si b din schema de pe
     //research paper, pt interesati contactatima da
     //ce trb sa stiti ii ca basically, a ii distanta orizontala
@@ -22,6 +17,7 @@ public class Omnidirectional {
     //distanta verticala. trebuie cunoscute pt calcule ulterioare
 
     private static class AXIS{
+
         public static float A = 1;
         public static float B = 1; //???
     }
@@ -66,16 +62,14 @@ public class Omnidirectional {
 
             float maxW = maxAngularVel();
 
-
             if(maxW != 0){
                 Motors.P1 = lim * (Motors.W1 / maxW);
                 Motors.P2 = lim * (Motors.W2 / maxW);
                 Motors.P3 = lim * (Motors.W3 / maxW);
                 Motors.P4 = lim * (Motors.W4 / maxW);
-            }else{
+            } else {
                 P1 = P2 = P3 = P4 = 0;
             }
-
 
             angularCalculated = false;
             powersCalculated = true;
@@ -104,7 +98,7 @@ public class Omnidirectional {
     /*
     * DEPRECATED
     * */
-    //what does this do
+//    what does this do
 //    public static void SetMotors(DcMotor rb, DcMotor rf, DcMotor lf, DcMotor lb)
 //    {
 //        Robot.Motors.LB = lb;
@@ -115,8 +109,8 @@ public class Omnidirectional {
 
 
     //un fel de constructor da nu chiar ca ii clasa statica, OOP elitists would kill me
-    public static void Init(float A, float B, float wheelRadius)
-    {
+    public static void Init(float A, float B, float wheelRadius) {
+
         Omnidirectional.wheelRadius = wheelRadius;
         AXIS.A = A;
         AXIS.B = B;
@@ -125,8 +119,8 @@ public class Omnidirectional {
     // calculeaza viteza unghiulara pt a se aplica forta V si rotatia W
     // le baga in Motors, unde se tine evidenta datelor fiecarui motor
     // Vx si Vy is forta descompusa
-    public static void calculateAngulars(float Vy, float Vx, float W)
-    {
+    public static void calculateAngulars(float Vy, float Vx, float W) {
+
         Motors.W1 = Vx - Vy - (AXIS.A + AXIS.B) * W;
         Motors.W2 = Vx + Vy + (AXIS.A + AXIS.B) * W;
         Motors.W3 = Vx + Vy - (AXIS.A + AXIS.B) * W;

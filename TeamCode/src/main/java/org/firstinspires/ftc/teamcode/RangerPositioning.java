@@ -63,7 +63,6 @@ public class RangerPositioning {
         float m = (float)Math.tan(Math.toRadians(Robot.getAngle()));
         RangerPositioning.updateRanges();
 
-
     }
 
     

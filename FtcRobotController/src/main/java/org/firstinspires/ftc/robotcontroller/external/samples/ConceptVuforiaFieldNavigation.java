@@ -73,8 +73,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  * is explained below.
  */
 
-@TeleOp(name="Vuforia Field Nav", group ="Concept")
-@Disabled
+@TeleOp(name="Vuforia Field Nav", group ="Tests")
 public class ConceptVuforiaFieldNavigation extends LinearOpMode {
 
     // IMPORTANT:  For Phone Camera, set 1) the camera source and 2) the orientation, based on how your phone is mounted:
@@ -97,8 +96,7 @@ public class ConceptVuforiaFieldNavigation extends LinearOpMode {
      * and paste it in to your code on the next line, between the double quotes.
      */
     private static final String VUFORIA_KEY =
-            " -- YOUR NEW VUFORIA KEY GOES HERE  --- ";
-
+            "AZaXhin/////AAABmVqgZsDGgU6nl3zPc8RPIKhoXfjrCmD+w9JCx4ZqSx1Y7o78DUphM6lk3+IYYIaskKLTpsNgKGKL4b7v57uRQz479aFd+p5ygHfszFfUANxP2/XNqxP0oPblewLWQpityNbB5cutOMk11LN/2MonbXRc8QhKf6DIqqES4royHhKl4zYOPOyo/jfPG8h9UkIxzkoSGPuwVWmCQLuJZUctdILJsWo9H/wEM5Q3BpjEeEE4z1t75cgY8v6viPutxzl9hgBd+/mAfwdVVx+NeQFVPk22zLG/k40hlqEfsROJh4zounRGsYyIJNpfpQPFW6AMCvnnJS1OAzds9LlaFgBfbNju7RzO0FlrHSG4j8eIJc7/";
     // Since ImageTarget trackables use mm to specifiy their dimensions, we must use mm for all the physical dimension.
     // We will define some constants and conversions here.  These are useful for the Freight Frenzy field.
     private static final float mmPerInch        = 25.4f;
@@ -131,7 +129,7 @@ public class ConceptVuforiaFieldNavigation extends LinearOpMode {
         parameters.cameraDirection   = CAMERA_CHOICE;
 
         // Turn off Extended tracking.  Set this true if you want Vuforia to track beyond the target.
-        parameters.useExtendedTracking = false;
+        parameters.useExtendedTracking = true;
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);

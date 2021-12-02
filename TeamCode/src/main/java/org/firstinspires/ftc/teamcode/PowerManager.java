@@ -89,6 +89,17 @@ public class PowerManager {
 
     }
 
+    public static void setPowersForced(float rb, float rf, float lb, float lf){
+        Motors.RB = rb;
+        Motors.LF = lf;
+        Motors.LB = lb;
+        Motors.RF = rf;
+        Motors.tRB = rb;
+        Motors.tLF = lf;
+        Motors.tLB = lb;
+        Motors.tRF = rf;
+    }
+
     public static void debugPrintTargets() {
         System.out.printf("LF: %f tLF: %f ---- RF: %f tRF: %f ---- LB: %f tLB: %f ---- RB: %f tRB: %f\n",
                 Motors.LF, Motors.sLF, Motors.RF, Motors.sRF, Motors.LB, Motors.sLB, Motors.RB, Motors.sRB);

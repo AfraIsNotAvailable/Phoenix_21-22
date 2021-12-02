@@ -22,6 +22,11 @@ public class Omnidirectional {
         public static float B = 1; //???
     }
 
+    private static boolean forced;
+
+    public static void forcePowers(boolean b){
+        forced = b;
+    }
 
     //clasa care sa tina evidenta de fiecare motor,
     //motivu pt care ii clasa e ca arata mai furmus
@@ -76,7 +81,12 @@ public class Omnidirectional {
         }
 
         public static void setPowers() {
-            PowerManager.setTargets(Motors.P1,Motors.P2,Motors.P3,Motors.P4);
+            if(forced){
+                PowerManager.setPowersForced(Motors.P1,Motors.P2,Motors.P3,Motors.P4);
+
+            }else{
+                PowerManager.setTargets(Motors.P1,Motors.P2,Motors.P3,Motors.P4);
+            }
             //if(!powersCalculated)
               //  throw new Exception("OmniCalculationError: Powers not calculated."); // nu putem da putere la motoare daca nu s-o calculat puteri
             angularCalculated = false;

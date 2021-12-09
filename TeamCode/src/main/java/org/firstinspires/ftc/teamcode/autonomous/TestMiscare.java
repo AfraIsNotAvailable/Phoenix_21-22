@@ -6,6 +6,7 @@ import static java.lang.Math.PI;
 import org.firstinspires.ftc.teamcode.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -26,24 +27,26 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@Autonomous(name="TestMiscare", group="Pushbot")
-public class TestMiscare extends LinearOpMode implements OpModeAddition{
+@TeleOp(name="TestMiscare", group="Pushbot")
+public class TestMiscare extends LinearOpMode implements OpModeAddition {
 
     @Override
     public void runOpMode()  {
 
             Robot.init(this,hardwareMap);
-            Omnidirectional.Init(14.5f,19,3.8f );
+            Omnidirectional.Init(14.5f,19,3.8f);
             waitForStart();
             ElapsedTime rt = new ElapsedTime();
             rt.reset();
             PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
+            PowerManager.setStep(0.5f);
+            PowerManager.setDeltaStep(5);
             PowerManager.start();
             long tm = 0;
 
             float a = 0;
             while (opModeIsActive()){
-               Omnidirectional.setVelocity(gamepad1.right_stick_x,gamepad1.right_stick_y,0f,.5f);
+               Omnidirectional.setVelocity(gamepad1.right_stick_x, gamepad1.right_stick_y, gamepad1.left_stick_x,.2f);
 //                a+=Math.PI/4;
 
                 if(gamepad1.a){

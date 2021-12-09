@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.autonomous;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -21,6 +22,7 @@ import org.firstinspires.ftc.teamcode.Robot;
  * is explained below.
  */
 @Autonomous(name="TestMiscare2", group="Pushbot")
+@Disabled
 public class TestMiscare2 extends LinearOpMode implements OpModeAddition{
 
     @Override

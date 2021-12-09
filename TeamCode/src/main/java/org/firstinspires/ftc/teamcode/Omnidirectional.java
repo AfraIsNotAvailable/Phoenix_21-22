@@ -196,19 +196,19 @@ public class Omnidirectional {
         Motors.setPowers();
     }
 
-    public static void setVelocity(Vector2D V)  {
+    public static void setVelocity(Vector2D V) {
         calculateAngulars(V,0);
         Motors.calculatePowers(1.f);
         Motors.setPowers();
     }
 
-    public static void setVelocity(Vector2D V, float W)  {
+    public static void setVelocity(Vector2D V, float W) {
         calculateAngulars(V,W);
         Motors.calculatePowers(1.f);
         Motors.setPowers();
     }
 
-    public static void setVelocity(Vector2D V, float W, float limit)  {
+    public static void setVelocity(Vector2D V, float W, float limit) {
         calculateAngulars(V,W);
         Motors.calculatePowers(limit);
         Motors.setPowers();
@@ -224,7 +224,7 @@ public class Omnidirectional {
         Motors.setPowers();
     }
 
-    public static void setVelocity(float Vx, float Vy,float W, int ms) {
+    public static void setVelocity(float Vx, float Vy, float W, int ms) {
         //incepem un task now pe thread care zice cv de genu
         // ba in ms milisecunde tai curentu la motoare :*
         Robot.scheduler.schedule(Motors::kill, ms,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
@@ -239,7 +239,7 @@ public class Omnidirectional {
         // ba in ms milisecunde tai curentu la motoare :*
         Robot.scheduler.schedule(Motors::kill, ms,TimeUnit.MILLISECONDS); //de parca ne permitem microseconds lol
 
-        calculateAngulars(Vx,Vy,W);
+        calculateAngulars(Vx, Vy, W);
         Motors.calculatePowers(limit);
         Motors.setPowers();
     }

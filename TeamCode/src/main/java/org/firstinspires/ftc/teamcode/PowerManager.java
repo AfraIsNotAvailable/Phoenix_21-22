@@ -1,11 +1,7 @@
 package org.firstinspires.ftc.teamcode;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class PowerManager {
-
-
 
     public static class Motors{
         public static float LF = 0; //1 pe poza
@@ -42,11 +38,12 @@ public class PowerManager {
     public static void setStep(float ns) {
         step = ns;
     }
+    public static void setDeltaStep(float  ds) {
+        delta_step = ds;
+    }
 
     public static float weigth = 1;
     public static void setTargets(float tlf, float trf, float tlb, float trb) {
-
-
 
         Motors.tLF= tlf;
         Motors.tRF= trf;

@@ -190,7 +190,7 @@ public class OpenCvWebcamExample extends LinearOpMode {
             Core.inRange(hlsImage, minValues, maxValues, mask);
 // show the partial output
 
-            return mask; // implementeaza Mat frame ul pt ce vrei sa detectezi
+            return mask;
         }
 
         @Override

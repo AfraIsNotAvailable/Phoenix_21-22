@@ -2,14 +2,18 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import java.lang.reflect.Field;
@@ -25,10 +29,17 @@ public class Robot {
 
 
     public static class Motors{
-        public static DcMotor LF = null; //1 pe poza
-        public static DcMotor RF = null; //2 pe poza
-        public static DcMotor LB = null; //3 pe poza
-        public static DcMotor RB = null; //4 pe poza
+        public static DcMotorEx LF = null; //1 pe poza
+        public static DcMotorEx RF = null; //2 pe poza
+        public static DcMotorEx LB = null; //3 pe poza
+        public static DcMotorEx RB = null; //4 pe poza
+    }
+
+    public static class Range{
+        public static Rev2mDistanceSensor Front = null;
+        public static Rev2mDistanceSensor Left = null;
+        public static Rev2mDistanceSensor Back = null;
+        public static Rev2mDistanceSensor Right = null;
     }
 
     public static BNO055IMU Gyroscope = null;
@@ -36,10 +47,7 @@ public class Robot {
     public static HardwareMap hMap = null;
     public static OpModeAddition opMode = null;
 
-    public static ModernRoboticsI2cRangeSensor R1;
-    public static ModernRoboticsI2cRangeSensor R2;
-    public static ModernRoboticsI2cRangeSensor R3;
-    public static ModernRoboticsI2cRangeSensor R4;
+
 
     public  static void init(OpModeAddition om, HardwareMap m) {
         Robot.opMode = om;
@@ -49,6 +57,7 @@ public class Robot {
             Robot.doHardwareMap();
             Robot.doGyroscopeSetup();
             Robot.doMotorsSetup();
+            Robot.doRangerSetup();
         } catch (Exception e) {
             return;
         }
@@ -56,7 +65,7 @@ public class Robot {
 
     private static void doMotorsSetup() throws Exception {
         if(Motors.LB == null && Motors.LF == null && Motors.RB == null && Motors.RF == null)
-            throw  new Exception("a motor was null in doMotorsSetup()");
+            throw new Exception("a motor was null in doMotorsSetup()");
 
         Motors.LB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Motors.LF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -83,10 +92,10 @@ public class Robot {
         if(Robot.hMap == null)
             throw new Exception("Hardwaremap was null, in doHardwareMap");
 
-        Motors.LB = Robot.hMap.get(DcMotor.class, "motorLB");
-        Motors.LF = Robot.hMap.get(DcMotor.class, "motorLF");
-        Motors.RB = Robot.hMap.get(DcMotor.class, "motorRB");
-        Motors.RF = Robot.hMap.get(DcMotor.class, "motorRF");
+        Motors.LB = Robot.hMap.get(DcMotorEx.class, "motorLB");
+        Motors.LF = Robot.hMap.get(DcMotorEx.class, "motorLF");
+        Motors.RB = Robot.hMap.get(DcMotorEx.class, "motorRB");
+        Motors.RF = Robot.hMap.get(DcMotorEx.class, "motorRF");
 
         Robot.Gyroscope = Robot.hMap.get(BNO055IMU.class , "gyro" );
 
@@ -117,12 +126,15 @@ public class Robot {
 
     public static void doRangerSetup(){
          try{
-             Robot.R1 = Robot.hMap.get(ModernRoboticsI2cRangeSensor.class,"R1");
-             Robot.R2 = Robot.hMap.get(ModernRoboticsI2cRangeSensor.class,"R2");
-             Robot.R3 = Robot.hMap.get(ModernRoboticsI2cRangeSensor.class,"R3");
-             Robot.R4 = Robot.hMap.get(ModernRoboticsI2cRangeSensor.class,"R4");
+             Range.Front = Robot.hMap.get(Rev2mDistanceSensor.class,"distFront");
+             Range.Left = Robot.hMap.get(Rev2mDistanceSensor.class,"distLeft");
+             Range.Back = Robot.hMap.get(Rev2mDistanceSensor.class,"distBack");
+             Range.Right = Robot.hMap.get(Rev2mDistanceSensor.class,"distRight");
+
+             //Range.Left.
+
          }catch (Exception e){
-             RangerPositioning.healthyRangers = false;
+             //RangerPositioning.healthyRangers = false;
          }
     }
 
@@ -130,6 +142,22 @@ public class Robot {
         Orientation angles = Robot.Gyroscope.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         return (angles.firstAngle + 90) % 360;
+    }
+
+    public static float getFrontDistance(){
+        return (float)Range.Front.getDistance(DistanceUnit.MM) + 437/2;
+    }
+
+    public static float getBackDistance(){
+        return (float)Range.Back.getDistance(DistanceUnit.MM) + 437/2;
+    }
+
+    public static float getLeftDistance(){
+        return (float)Range.Left.getDistance(DistanceUnit.MM) + 335/2;
+    }
+
+    public static float getRightDistance(){
+        return (float)Range.Right.getDistance(DistanceUnit.MM) + 335/2;
     }
 
 

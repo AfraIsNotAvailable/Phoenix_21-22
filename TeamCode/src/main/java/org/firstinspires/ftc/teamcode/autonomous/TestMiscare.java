@@ -6,7 +6,6 @@ import static java.lang.Math.PI;
 import org.firstinspires.ftc.teamcode.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -27,26 +26,31 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name="TestMiscare", group="Pushbot")
-public class TestMiscare extends LinearOpMode implements OpModeAddition {
+@Autonomous(name="TestMiscare", group="Pushbot")
+public class TestMiscare extends LinearOpMode implements OpModeAddition{
 
     @Override
     public void runOpMode()  {
 
             Robot.init(this,hardwareMap);
-            Omnidirectional.Init(14.5f,19,3.8f);
+            Omnidirectional.Init(14.5f,19,3.8f );
+            Omnidirectional.forcePowers(true);
             waitForStart();
             ElapsedTime rt = new ElapsedTime();
             rt.reset();
-            PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
-            PowerManager.setStep(0.5f);
-            PowerManager.setDeltaStep(5);
-            PowerManager.start();
+            //PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
+            //PowerManager.start();
             long tm = 0;
 
             float a = 0;
             while (opModeIsActive()){
-               Omnidirectional.setVelocity(gamepad1.right_stick_x, gamepad1.right_stick_y, gamepad1.left_stick_x,.2f);
+//               Omnidirectional.setVelocity(0,0,
+//                       (float)((Math.PI * (Robot.getAngle() - 90) * (Math.abs((Robot.getAngle() - 90)) < 0.4 ? 0 : 1)  / 180.f) - (float)Math.asin(gamepad1.right_stick_y)),.2f);
+               Omnidirectional.setVelocity(gamepad1.right_stick_x,gamepad1.right_stick_y,
+                       0 ,.3f);
+                a+=Math.PI/4;
+//               Omnidirectional.setVelocity(gamepad1.right_stick_x,gamepad1.right_stick_y,
+//                       (float)Math.abs((Math.PI * Robot.getAngle() / 180.f) - (float)Math.asin(gamepad1.right_stick_y)),.3f);
 //                a+=Math.PI/4;
 
                 if(gamepad1.a){
@@ -56,6 +60,8 @@ public class TestMiscare extends LinearOpMode implements OpModeAddition {
                     Robot.Motors.LB.setPower(0);
                     Robot.Motors.RF.setPower(0);
                 }
+
+                telemetry.addData("angle",Robot.getAngle());
 
                 telemetry.addData("wLF ",Omnidirectional.Motors.W1);
                 telemetry.addData("wLB ",Omnidirectional.Motors.W2);
@@ -77,6 +83,7 @@ public class TestMiscare extends LinearOpMode implements OpModeAddition {
                 telemetry.addData("dLB ",PowerManager.Motors.dRB);
                 telemetry.addData("dRB ",PowerManager.Motors.dRF);
                 telemetry.addData("dRF ",PowerManager.Motors.dLB);
+
 
 //                PowerManager.setTargets((float)Math.sin(a),(float)Math.sin(a),(float)Math.sin(a),(float)Math.sin(a));
 //                if(rt.milliseconds()>tm){

@@ -1,4 +1,6 @@
 package org.firstinspires.ftc.teamcode;
+import static java.lang.Math.abs;
+
 import java.util.concurrent.TimeUnit;
 
 public class PowerManager {
@@ -30,7 +32,7 @@ public class PowerManager {
         public static float wRB = 1;
     }
 
-    public static float step = 0.2f;
+    public static float step = 0.3f;
     public static float nanosecond_step = 100000000.f * 0.95f;
     public static float delta_step = 10 ;
     public static boolean bRun = true;
@@ -72,17 +74,17 @@ public class PowerManager {
 
         PowerManager.weigth = Math.max(
                 Math.max(
-                        Math.abs(Motors.LF - Motors.tLF),Math.abs(Motors.LB - Motors.tLB)
+                        abs(Motors.LF - Motors.tLF), abs(Motors.LB - Motors.tLB)
                 ),
                 Math.max(
-                        Math.abs(Motors.RF - Motors.tRF),Math.abs(Motors.RB - Motors.tRB)
+                        abs(Motors.RF - Motors.tRF), abs(Motors.RB - Motors.tRB)
                 )
         );
 
-        Motors.wLF = Math.abs(Motors.LF - Motors.tLF);
-        Motors.wRF = Math.abs(Motors.RF - Motors.tRF);
-        Motors.wLB = Math.abs(Motors.LB - Motors.tLB);
-        Motors.wRB = Math.abs(Motors.RB - Motors.tRB);
+        Motors.wLF = abs(Motors.LF - Motors.tLF);
+        Motors.wRF = abs(Motors.RF - Motors.tRF);
+        Motors.wLB = abs(Motors.LB - Motors.tLB);
+        Motors.wRB = abs(Motors.RB - Motors.tRB);
 
     }
 
@@ -116,22 +118,22 @@ public class PowerManager {
 
             while(bRun) {
                 //TODO check to see if it's better if calculated everytime or on setTargets
-                Motors.dLF = Math.min(Math.max(Math.abs(Motors.tLF - Motors.LF) * delta_step,1),15);
-                Motors.dRF = Math.min(Math.max(Math.abs(Motors.tRF - Motors.RF) * delta_step,1),15);
-                Motors.dLB = Math.min(Math.max(Math.abs(Motors.tLB - Motors.LB) * delta_step,1),15);
-                Motors.dRB = Math.min(Math.max(Math.abs(Motors.tRB - Motors.RB) * delta_step,1),15);
+                Motors.dLF = Math.min(Math.max(abs(Motors.tLF - Motors.LF) * delta_step,1),15);
+                Motors.dRF = Math.min(Math.max(abs(Motors.tRF - Motors.RF) * delta_step,1),15);
+                Motors.dLB = Math.min(Math.max(abs(Motors.tLB - Motors.LB) * delta_step,1),15);
+                Motors.dRB = Math.min(Math.max(abs(Motors.tRB - Motors.RB) * delta_step,1),15);
                 long startTime = System.nanoTime();
 
-                if(Math.abs(Motors.LF - Motors.tLF) > Math.abs(0.001)) {
+                if(abs(Motors.LF - Motors.tLF) > abs(0.001)) {
                     Motors.LF += Motors.dLF * Motors.sLF * (dt * step * Motors.wLF/weigth);
                 }
-                if(Math.abs(Motors.RF - Motors.tRF) > Math.abs(0.001)) {
+                if(abs(Motors.RF - Motors.tRF) > abs(0.001)) {
                     Motors.RF += Motors.dRF * Motors.sRF * (dt * step * Motors.wRF/weigth);
                 }
-                if(Math.abs(Motors.LB - Motors.tLB) > Math.abs(0.001)) {
+                if(abs(Motors.LB - Motors.tLB) > abs(0.001)) {
                     Motors.LB += Motors.dLB * Motors.sLB * (dt * step * Motors.wLB/weigth);
                 }
-                if(Math.abs(Motors.RB - Motors.tRB) > Math.abs(0.001)) {
+                if(abs(Motors.RB - Motors.tRB) > abs(0.001)) {
                     Motors.RB += Motors.dRB * Motors.sRB * (dt * step * Motors.wRB/weigth);
                 }
 
@@ -145,10 +147,16 @@ public class PowerManager {
                 float et = ((float)System.nanoTime() - (float)startTime);
                 dt = et/nanosecond_step;
 
-                Robot.Motors.RB.setPower(Motors.RB);
-                Robot.Motors.RF.setPower(Motors.RF);
-                Robot.Motors.LB.setPower(Motors.LB);
-                Robot.Motors.LF.setPower(Motors.LF);
+
+//                if()
+                if(bRun) {
+                    Movement.setPowerForced(
+                            abs(Motors.RB) < 0.05 ? 0 : Motors.RB,
+                            abs(Motors.RF) < 0.05 ? 0 : Motors.RF,
+                            abs(Motors.LB) < 0.05 ? 0 : Motors.LB,
+                            abs(Motors.LF) < 0.05 ? 0 : Motors.LF
+                    );
+                }
 
             }
         }, (long)0, TimeUnit.MICROSECONDS);

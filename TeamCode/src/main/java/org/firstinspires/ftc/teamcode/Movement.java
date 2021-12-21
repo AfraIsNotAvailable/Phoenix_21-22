@@ -72,6 +72,17 @@ public class Movement {
         });
     }
 
+    public static void setPowerForced(float p){
+        setPowerForced(p,p,p,p);
+    }
+    //puteri diferite
+    public static void setPowerForced(float lf, float rf, float lb, float rb){
+        Robot.Motors.LF.setPower(lf);
+        Robot.Motors.RF.setPower(rf);
+        Robot.Motors.LB.setPower(lb);
+        Robot.Motors.RB.setPower(rb);
+    }
+
 
 
 }

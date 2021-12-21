@@ -16,10 +16,10 @@ public class Omnidirectional {
     //parca de la centru de greutate la centru unei roti, iar b
     //distanta verticala. trebuie cunoscute pt calcule ulterioare
 
-    private static class AXIS{
+    public static class AXIS{
 
-        public static float A = 1;
-        public static float B = 1; //???
+        public static float A = 15;
+        public static float B = 21; //???
     }
 
     private static boolean forced;
@@ -82,7 +82,8 @@ public class Omnidirectional {
 
         public static void setPowers() {
             if(forced){
-                PowerManager.setPowersForced(Motors.P1,Motors.P2,Motors.P3,Motors.P4);
+                Movement.setPowerForced(P1,P2,P3,P4);
+
 
             }else{
                 PowerManager.setTargets(Motors.P1,Motors.P2,Motors.P3,Motors.P4);
@@ -103,7 +104,7 @@ public class Omnidirectional {
 
     //again, e nevoie de raza rotii pt calcule
     //nu pot explica mai mult it's literally physics
-    private static float wheelRadius = 3.7f;
+    public static float wheelRadius = 5f;
 
     /*
     * DEPRECATED

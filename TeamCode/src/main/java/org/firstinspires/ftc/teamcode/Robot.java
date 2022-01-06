@@ -57,7 +57,7 @@ public class Robot {
             Robot.doHardwareMap();
             Robot.doGyroscopeSetup();
             Robot.doMotorsSetup();
-            Robot.doRangerSetup();
+        //    Robot.doRangerSetup();
         } catch (Exception e) {
             return;
         }
@@ -126,12 +126,12 @@ public class Robot {
 
     public static void doRangerSetup(){
          try{
-             Range.Front = Robot.hMap.get(Rev2mDistanceSensor.class,"distFront");
-             Range.Left = Robot.hMap.get(Rev2mDistanceSensor.class,"distLeft");
-             Range.Back = Robot.hMap.get(Rev2mDistanceSensor.class,"distBack");
-             Range.Right = Robot.hMap.get(Rev2mDistanceSensor.class,"distRight");
+            // Range.Front = Robot.hMap.get(Rev2mDistanceSensor.class,"distFront");
+             //Range.Left = Robot.hMap.get(Rev2mDistanceSensor.class,"distLeft");
+            // Range.Back = Robot.hMap.get(Rev2mDistanceSensor.class,"distBack");
+           //  Range.Right = Robot.hMap.get(Rev2mDistanceSensor.class,"distRight");
 
-             //Range.Left.
+             //Range.Left.getDeviceClient().setM
 
          }catch (Exception e){
              //RangerPositioning.healthyRangers = false;

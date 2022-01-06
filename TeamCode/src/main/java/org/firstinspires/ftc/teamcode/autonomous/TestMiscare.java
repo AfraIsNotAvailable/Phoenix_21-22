@@ -32,14 +32,24 @@ public class TestMiscare extends LinearOpMode implements OpModeAddition{
     @Override
     public void runOpMode()  {
 
+//            Robot.init(this,hardwareMap);
+//            Omnidirectional.Init(14.5f,19,3.8f );
+//            Omnidirectional.forcePowers(false);
+//            waitForStart();
+//            ElapsedTime rt = new ElapsedTime();
+//            rt.reset();
+//            PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
+//            PowerManager.step =  0.4f;
+//            PowerManager.start();
+
             Robot.init(this,hardwareMap);
-            Omnidirectional.Init(14.5f,19,3.8f );
-            Omnidirectional.forcePowers(true);
+    //            Omnidirectional.Init(14.5f,19,3.8f ); //rev
+            Omnidirectional.Init(17.f,17.5f,5.f ); //gobilda
             waitForStart();
             ElapsedTime rt = new ElapsedTime();
             rt.reset();
-            //PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
-            //PowerManager.start();
+            PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
+            PowerManager.start();
             long tm = 0;
 
             float a = 0;
@@ -47,7 +57,7 @@ public class TestMiscare extends LinearOpMode implements OpModeAddition{
 //               Omnidirectional.setVelocity(0,0,
 //                       (float)((Math.PI * (Robot.getAngle() - 90) * (Math.abs((Robot.getAngle() - 90)) < 0.4 ? 0 : 1)  / 180.f) - (float)Math.asin(gamepad1.right_stick_y)),.2f);
                Omnidirectional.setVelocity(gamepad1.right_stick_x,gamepad1.right_stick_y,
-                       0 ,.3f);
+                       gamepad1.left_stick_x * 3.14f/2 ,1f);
                 a+=Math.PI/4;
 //               Omnidirectional.setVelocity(gamepad1.right_stick_x,gamepad1.right_stick_y,
 //                       (float)Math.abs((Math.PI * Robot.getAngle() / 180.f) - (float)Math.asin(gamepad1.right_stick_y)),.3f);
@@ -55,10 +65,6 @@ public class TestMiscare extends LinearOpMode implements OpModeAddition{
 
                 if(gamepad1.a){
                     PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
-                    Robot.Motors.RB.setPower(0);
-                    Robot.Motors.LF.setPower(0);
-                    Robot.Motors.LB.setPower(0);
-                    Robot.Motors.RF.setPower(0);
                 }
 
                 telemetry.addData("angle",Robot.getAngle());

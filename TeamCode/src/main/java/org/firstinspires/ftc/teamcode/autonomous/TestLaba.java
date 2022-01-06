@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Omnidirectional;
@@ -21,35 +22,23 @@ import org.firstinspires.ftc.teamcode.Robot;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@Autonomous(name="TestMiscare2", group="Pushbot")
+@Autonomous(name="TestLaba", group="Pushbot")
 
-public class TestMiscare2 extends LinearOpMode implements OpModeAddition{
+public class TestLaba extends LinearOpMode implements OpModeAddition{
 
     @Override
     public void runOpMode()  {
 
-            Robot.init(this,hardwareMap);
-//            Omnidirectional.Init(14.5f,19,3.8f ); //rev
-            Omnidirectional.Init(17.f,17.5f,5.f ); //gobilda
-            waitForStart();
-            ElapsedTime rt = new ElapsedTime();
-            rt.reset();
-            PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
-            PowerManager.start();
-            long tm = 0;
+        CRServo servo = hardwareMap.get(CRServo.class,"servo");
 
-            float a = 0;
-            while (opModeIsActive()){
-                Robot.Motors.RB.setPower(1);
-                Robot.Motors.RF.setPower(1);
-                Robot.Motors.LB.setPower(1);
-                Robot.Motors.LF.setPower(1);
-                telemetry.update();
-                //sleep(100 );
+        waitForStart();
 
-            }
-            PowerManager.reset();
-
+        while (isOpModeIsActive()){
+            if(gamepad1.a)
+                servo.setPower(1);
+            else
+                servo.setPower(0);
+        }
 
 
     }

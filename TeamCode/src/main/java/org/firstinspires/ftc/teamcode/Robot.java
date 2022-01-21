@@ -33,6 +33,8 @@ public class Robot {
         public static DcMotorEx RF = null; //2 pe poza
         public static DcMotorEx LB = null; //3 pe poza
         public static DcMotorEx RB = null; //4 pe poza
+
+        public static DcMotorEx LIFT = null;
     }
 
     public static class Range{
@@ -49,7 +51,7 @@ public class Robot {
 
 
 
-    public  static void init(OpModeAddition om, HardwareMap m) {
+    public static void init(OpModeAddition om, HardwareMap m) {
         Robot.opMode = om;
         Robot.hMap = m;
 
@@ -71,22 +73,28 @@ public class Robot {
         Motors.LF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Motors.RB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Motors.RF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Motors.LIFT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         Motors.LB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Motors.LF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Motors.RB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Motors.RF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Motors.LIFT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         Motors.LB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Motors.LF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Motors.RB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Motors.RF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Motors.LIFT.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         Motors.LB.setDirection(DcMotorSimple.Direction.REVERSE);
         Motors.LF.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
+        Motors.LIFT = Robot.hMap.get(DcMotorEx.class, "lift_motor");
     }
 
-    private static void doHardwareMap() throws Exception{
+    private static void doHardwareMap() throws Exception {
         //hopefully this wont need explanation
 
         if(Robot.hMap == null)
@@ -96,6 +104,7 @@ public class Robot {
         Motors.LF = Robot.hMap.get(DcMotorEx.class, "motorLF");
         Motors.RB = Robot.hMap.get(DcMotorEx.class, "motorRB");
         Motors.RF = Robot.hMap.get(DcMotorEx.class, "motorRF");
+        Motors.LIFT = Robot.hMap.get(DcMotorEx.class, "lift_motor");
 
         Robot.Gyroscope = Robot.hMap.get(BNO055IMU.class , "gyro" );
 

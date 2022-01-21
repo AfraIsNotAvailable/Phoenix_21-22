@@ -27,8 +27,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -36,73 +37,42 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.Omnidirectional;
+import org.firstinspires.ftc.teamcode.Movement;
 import org.firstinspires.ftc.teamcode.OpModeAddition;
 import org.firstinspires.ftc.teamcode.PowerManager;
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.Vector2D;
 
-@TeleOp(name="TestPozitionareOmni")
 
-public class TestPozitionareOmni extends LinearOpMode implements OpModeAddition {
+/**
+ * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
+ * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
+ * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
+ * class is instantiated on the Robot Controller and executed.
+ *
+ * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
+ * It includes all the skeletal structure that all linear OpModes contain.
+ *
+ * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
+ * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
+ */
+
+@Autonomous(name="TestSlide",group = "pushbot")
+
+public class TestSlide extends LinearOpMode implements OpModeAddition {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
+    private DcMotor motor = null;
 
-    Vector2D P = new Vector2D(0,0);
-    Vector2D V = new Vector2D(0,0);
 
     @Override
     public void runOpMode() {
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
         Robot.init(this,hardwareMap);
-        Omnidirectional.Init(15f,21,5f );
-        Omnidirectional.forcePowers(false);
-        PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
-        PowerManager.start();
         waitForStart();
-        double dt = 0;
-        double time = runtime.milliseconds() + 100;
-        while (opModeIsActive()){
-            double t1 = runtime.milliseconds();
-
-            Omnidirectional.setVelocity(gamepad1.right_stick_x,gamepad1.right_stick_y,
-                    0 ,0.4f);
-            double x = (double)Omnidirectional.wheelRadius * (
-                    (double)Robot.Motors.RB.getVelocity(AngleUnit.RADIANS) +
-                            (double)Robot.Motors.RF.getVelocity(AngleUnit.RADIANS) +
-                            (double)Robot.Motors.LB.getVelocity(AngleUnit.RADIANS) +
-                            (double)Robot.Motors.LF.getVelocity(AngleUnit.RADIANS)
-            ) / 4;
-
-            double y = (double)Omnidirectional.wheelRadius * (
-                    -1*Robot.Motors.RB.getVelocity(AngleUnit.RADIANS) +
-                            (double)Robot.Motors.RF.getVelocity(AngleUnit.RADIANS) +
-                            (double)Robot.Motors.LB.getVelocity(AngleUnit.RADIANS) +
-                            -1*(double)Robot.Motors.LF.getVelocity(AngleUnit.RADIANS)
-            ) / 4;
-            V = new Vector2D((float)x,(float)y);
-            V.multiply((float)(dt/1000));
-            P.add(V);
-
-
-            telemetry.addData("X", P.x);
-            telemetry.addData("Y", P.y);
-            telemetry.addData("RB", Robot.Motors.RB.getVelocity(AngleUnit.RADIANS));
-            telemetry.addData("RF", Robot.Motors.RF.getVelocity(AngleUnit.RADIANS));
-            telemetry.addData("LB", Robot.Motors.LB.getVelocity(AngleUnit.RADIANS));
-            telemetry.addData("LF", Robot.Motors.LF.getVelocity(AngleUnit.RADIANS));
-            telemetry.addData("delta t", dt);
-            double t2 = runtime.milliseconds();
-            dt = t2 - t1;
-
-
-            telemetry.update();
-
-        }
-
-        PowerManager.bRun = false;
-
+        Movement.setPowerForced(.2f,-.2f,-.2f,.2f);
+        sleep(1000);
     }
 
     @Override

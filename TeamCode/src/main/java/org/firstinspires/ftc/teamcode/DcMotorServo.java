@@ -59,9 +59,9 @@ public class DcMotorServo {
     public void setAngle(float angle, float speed){
         angle = Math.max(Math.min(angle,upper_limit),lower_limit);
         int target = (int)(angle * this.ratio * this.cpr)/360;
-//        motor.setTargetPosition(
-//            (int)(angle * this.ratio * this.cpr)/360
-//        );
+        /*motor.setTargetPosition(
+            (int)(angle * this.ratio * this.cpr)/360
+        );*/
 
 
         if(abs(target - motor.getCurrentPosition()) > 10)

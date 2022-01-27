@@ -79,7 +79,7 @@ public class Robot {
         Motors.LF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Motors.RB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Motors.RF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Motors.LIFT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Motors.LIFT.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         Motors.LB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Motors.LF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

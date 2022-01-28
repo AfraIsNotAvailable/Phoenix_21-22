@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-@TeleOp(name="Test Roti Adi ~", group="tests")
+@TeleOp(name="Test Roti Ad", group="tests")
 public class TestRoti extends LinearOpMode {
 
     @Override

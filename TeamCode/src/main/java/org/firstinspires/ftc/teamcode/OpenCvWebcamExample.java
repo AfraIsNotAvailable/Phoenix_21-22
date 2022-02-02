@@ -14,7 +14,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
-import org.w3c.dom.Attr;
+
 @Autonomous(name="Testopencv", group="Pushbot")
 
 public class OpenCvWebcamExample extends LinearOpMode {
@@ -151,7 +151,7 @@ public class OpenCvWebcamExample extends LinearOpMode {
     }
 
     // !!TERMINA IMPLEMENTAREA
-    class BallPipeline extends OpenCvPipeline {
+    public class BallPipeline extends OpenCvPipeline {
 
         boolean viewportPaused;
         private float hueStart = 0;

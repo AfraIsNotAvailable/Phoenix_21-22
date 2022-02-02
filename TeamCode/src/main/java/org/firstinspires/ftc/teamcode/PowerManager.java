@@ -32,9 +32,9 @@ public class PowerManager {
         public static float wRB = 1;
     }
 
-    public static float step = 0.3f;
+    public static float step = 0.1f;
     public static float nanosecond_step = 100000000.f * 0.95f;
-    public static float delta_step = 10 ;
+    public static float delta_step = 8 ;
     public static boolean bRun = true;
 
     public static void setStep(float ns) {

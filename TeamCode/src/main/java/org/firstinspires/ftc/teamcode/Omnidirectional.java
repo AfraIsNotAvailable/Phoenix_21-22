@@ -22,7 +22,8 @@ public class Omnidirectional {
         public static float B = 21; //???
     }
 
-    private static boolean forced;
+    public static boolean forced;
+    public static boolean velocity;
 
     public static void forcePowers(boolean b){
         forced = b;
@@ -85,6 +86,8 @@ public class Omnidirectional {
                 Movement.setPowerForced(P1,P2,P3,P4);
 
 
+            }else if(velocity){
+                Movement.setVelocityForced(Motors.W1,Motors.W2,Motors.W3,Motors.W4);
             }else{
                 PowerManager.setTargets(Motors.P1,Motors.P2,Motors.P3,Motors.P4);
             }

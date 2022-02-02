@@ -29,8 +29,8 @@ public class ControlMoto extends LinearOpMode implements OpModeAddition {
             speed = gamepad1.right_trigger - gamepad1.left_trigger;
             direction = gamepad1.right_stick_x;
 
-            right = speed - direction;
-            left = speed + direction;
+            right = speed ;
+            left = speed ;
 
             if (right > 1)
                 right = 1;

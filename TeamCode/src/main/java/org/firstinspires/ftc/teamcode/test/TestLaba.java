@@ -24,7 +24,7 @@ import org.firstinspires.ftc.teamcode.Robot;
  */
 @Autonomous(name="TestLaba", group="Pushbot")
 
-public class TestLaba extends LinearOpMode implements OpModeAddition{
+public class  TestLaba extends LinearOpMode implements OpModeAddition{
 
     @Override
     public void runOpMode()  {

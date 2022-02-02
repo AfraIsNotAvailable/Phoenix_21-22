@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.DcMotorServo;
@@ -16,64 +18,21 @@ public class TestLift extends LinearOpMode implements OpModeAddition {
         @Override
         public void runOpMode() throws InterruptedException {
 
-//        DcMotorServo lift_motor = new DcMotorServo(hardwareMap, "lift_motor", 53, 1484);
+        DcMotorServo lift_motor = new DcMotorServo(hardwareMap, "lift_motor", 13.7f, 28);
+        Servo servo = hardwareMap.get(Servo.class,"servo");
 
-            DcMotorEx lift_motor = hardwareMap.get(DcMotorEx.class, "lift_motor");
-            lift_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        waitForStart();
+        float angle = 0;
+        while (opModeIsActive()){
+            angle += 3*(gamepad1.right_trigger - gamepad1.left_trigger);
+            lift_motor.setAngle( gamepad1.right_trigger * -2000.f ,0.4f);
+            telemetry.addData("power",lift_motor.motor.getCurrentPosition());
+            telemetry.addData("d",angle);
+            telemetry.update();
 
-            ElapsedTime runtime = new ElapsedTime();
-
-            int position = 1;
-
-            waitForStart();
-
-//            Robot.init(this, hardwareMap);
-//            Robot.Motors.LIFT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-            while (isOpModeIsActive())
-            {
-//                Robot.Motors.LIFT.setVelocity(200);
-
-                if (gamepad1.right_bumper)
-                    position++;
-                else if (gamepad1.left_bumper)
-                    position--;
-
-                //Robot.Motors.LIFT.setPower(1);
-
-                switch (position){
-                    case 1:
-                        lift_motor.setTargetPosition(10);
-                        lift_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        lift_motor.setVelocity(10);
-                        break;
-                    case 2:
-                        lift_motor.setTargetPosition(20);
-                        lift_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        lift_motor.setVelocity(10);
-                        break;
-                    case 3:
-                        lift_motor.setTargetPosition(30);
-                        lift_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        lift_motor.setVelocity(10);
-                        break;
-                }
-
-                while (lift_motor.getTargetPosition() - lift_motor.getCurrentPosition() > 10){
-                    telemetry.addData("Status", "Waiting for motor so reach its target");
-                    telemetry.update();
-                }
-
-                lift_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-//                lift_motor.setAngle(1, 0.2f);
-
-                telemetry.addData("current pos: ", lift_motor.getCurrentPosition());
-                telemetry.addData("position: ", position);
-
-                telemetry.update();
+            servo.setPosition(2* Math.abs(gamepad1.left_stick_x) - 1);
         }
+
     }
 
     @Override

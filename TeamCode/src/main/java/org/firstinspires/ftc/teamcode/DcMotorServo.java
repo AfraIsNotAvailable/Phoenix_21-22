@@ -12,11 +12,12 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 //angle traveled = 360*(ticks/(cpr*gear ratio)
 //ticks = (angle * gear ratio * cpr) / 360
 public class DcMotorServo {
-    int ratio,cpr;
+    float ratio;
+    int cpr;
     float lower_limit = -(1<<30), upper_limit = +(1<<30);
     public DcMotorEx motor;
-
-    public DcMotorServo( HardwareMap h, String name, int ratio, int cpr){
+    public int target;
+    public DcMotorServo( HardwareMap h, String name, float ratio, int cpr){
 
         this.motor = h.get(DcMotorEx.class, name);
         this.ratio = ratio;
@@ -26,7 +27,7 @@ public class DcMotorServo {
 //        motor.setTargetPositionTolerance(16);
 //
 //        motor.setTargetPosition(0);
-        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+     //   motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //
 //
 //
@@ -42,7 +43,7 @@ public class DcMotorServo {
         this.cpr = cpr;
         this.lower_limit = ll;
         this.upper_limit = ul;
-        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       // motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setTargetPositionTolerance(4);
 
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -58,15 +59,22 @@ public class DcMotorServo {
 
     public void setAngle(float angle, float speed){
         angle = Math.max(Math.min(angle,upper_limit),lower_limit);
-        int target = (int)(angle * this.ratio * this.cpr)/360;
+        target = (int)(angle * this.ratio * this.cpr)/360;
         /*motor.setTargetPosition(
             (int)(angle * this.ratio * this.cpr)/360
         );*/
 
 
-        if(abs(target - motor.getCurrentPosition()) > 10)
-            motor.setPower(target < motor.getCurrentPosition() ? -speed : speed);
-        else
+        if(abs(target - motor.getCurrentPosition()) > cpr/2)
+            if(target > motor.getCurrentPosition()){
+                motor.setPower(speed);
+            }else{
+                motor.setPower(-speed);
+            }
+        else{
+            target = motor.getCurrentPosition();
             motor.setPower(0);
+        }
+
     }
 }

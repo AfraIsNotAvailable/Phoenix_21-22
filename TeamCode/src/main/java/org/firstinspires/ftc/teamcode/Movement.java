@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -81,6 +83,13 @@ public class Movement {
         Robot.Motors.RF.setPower(rf);
         Robot.Motors.LB.setPower(lb);
         Robot.Motors.RB.setPower(rb);
+    }
+
+    public static void setVelocityForced(float lf, float rf, float lb, float rb){
+        Robot.Motors.LF.setVelocity(lf, AngleUnit.RADIANS);
+        Robot.Motors.RF.setVelocity(rf, AngleUnit.RADIANS);
+        Robot.Motors.LB.setVelocity(lb, AngleUnit.RADIANS);
+        Robot.Motors.RB.setVelocity(rb, AngleUnit.RADIANS);
     }
 
 

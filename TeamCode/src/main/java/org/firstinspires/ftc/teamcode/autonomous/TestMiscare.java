@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.autonomous;
 
 
 import static java.lang.Math.PI;
+import static java.lang.Math.sqrt;
 
 import org.firstinspires.ftc.teamcode.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -32,6 +33,49 @@ public class TestMiscare extends LinearOpMode implements OpModeAddition{
     @Override
     public void runOpMode()  {
 
+
+            Robot.init(this,hardwareMap);
+
+            Omnidirectional.Init(11.25f,11.25f,5.f ); //custom
+            Omnidirectional.forced = false;
+            Omnidirectional.velocity = true;
+            waitForStart();
+            ElapsedTime rt = new ElapsedTime();
+            rt.reset();
+//            PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
+//            PowerManager.start();
+
+
+            while (opModeIsActive()){
+                if(gamepad1.left_stick_x == 0)
+                    Omnidirectional.setVelocity(gamepad1.right_stick_x * 100.f,gamepad1.right_stick_y* 100.f, 0.f,gamepad1.left_trigger);
+                else
+                {
+//                    PowerManager.setTargets(gamepad1.left_stick_x,-gamepad1.left_stick_x,gamepad1.left_stick_x,-gamepad1.left_stick_x);
+                    Omnidirectional.setVelocity(gamepad1.right_stick_x* 10.f,gamepad1.right_stick_y* 10.f, gamepad1.left_stick_x * 3.14f,gamepad1.left_trigger);
+
+                }
+
+                telemetry.addData("wLF ",Omnidirectional.Motors.W1);
+                telemetry.addData("wLB ",Omnidirectional.Motors.W2);
+                telemetry.addData("wRB ",Omnidirectional.Motors.W3);
+                telemetry.addData("wRF ",Omnidirectional.Motors.W4);
+                telemetry.update();
+
+            }
+            //PowerManager.reset();
+
+
+
+    }
+
+    @Override
+    public boolean isOpModeIsActive() {
+        return opModeIsActive();
+    }
+}
+
+
 //            Robot.init(this,hardwareMap);
 //            Omnidirectional.Init(14.5f,19,3.8f );
 //            Omnidirectional.forcePowers(false);
@@ -42,32 +86,10 @@ public class TestMiscare extends LinearOpMode implements OpModeAddition{
 //            PowerManager.step =  0.4f;
 //            PowerManager.start();
 
-            Robot.init(this,hardwareMap);
-    //            Omnidirectional.Init(14.5f,19,3.8f ); //rev
-            Omnidirectional.Init(17.f,17.5f,5.f ); //gobilda
-            waitForStart();
-            ElapsedTime rt = new ElapsedTime();
-            rt.reset();
-            PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
-            PowerManager.start();
-            long tm = 0;
-
-            float a = 0;
-            while (opModeIsActive()){
-//               Omnidirectional.setVelocity(0,0,
-//                       (float)((Math.PI * (Robot.getAngle() - 90) * (Math.abs((Robot.getAngle() - 90)) < 0.4 ? 0 : 1)  / 180.f) - (float)Math.asin(gamepad1.right_stick_y)),.2f);
-               Omnidirectional.setVelocity(gamepad1.right_stick_x,gamepad1.right_stick_y,
-                       gamepad1.left_stick_x * 3.14f/2 ,1f);
-                a+=Math.PI/4;
-//               Omnidirectional.setVelocity(gamepad1.right_stick_x,gamepad1.right_stick_y,
-//                       (float)Math.abs((Math.PI * Robot.getAngle() / 180.f) - (float)Math.asin(gamepad1.right_stick_y)),.3f);
-//                a+=Math.PI/4;
-
-                if(gamepad1.a){
-                    PowerManager.setTargets(0.0f,0.0f,0.0f,0.0f);
-                }
-
-                telemetry.addData("angle",Robot.getAngle());
+//            Omnidirectional.Init(14.5f,19,3.8f ); //rev
+//            Omnidirectional.Init(17.f,17.5f,5.f ); //gobilda
+/*
+ telemetry.addData("angle",Robot.getAngle());
 
                 telemetry.addData("wLF ",Omnidirectional.Motors.W1);
                 telemetry.addData("wLB ",Omnidirectional.Motors.W2);
@@ -97,18 +119,4 @@ public class TestMiscare extends LinearOpMode implements OpModeAddition{
 //                    tm+=10;
 //                }
 
-                telemetry.update();
-                //sleep(100 );
-
-            }
-            PowerManager.reset();
-
-
-
-    }
-
-    @Override
-    public boolean isOpModeIsActive() {
-        return opModeIsActive();
-    }
-}
+ */

@@ -55,56 +55,50 @@ public class Robot {
         Robot.opMode = om;
         Robot.hMap = m;
 
-        try{
-            Robot.doHardwareMap();
-            Robot.doGyroscopeSetup();
-            Robot.doMotorsSetup();
-        //    Robot.doRangerSetup();
-        } catch (Exception e) {
-            return;
-        }
+        Robot.doHardwareMap();
+        Robot.doGyroscopeSetup();
+        Robot.doMotorsSetup();
+
     }
 
-    private static void doMotorsSetup() throws Exception {
-        if(Motors.LB == null && Motors.LF == null && Motors.RB == null && Motors.RF == null)
-            throw new Exception("a motor was null in doMotorsSetup()");
+    private static void doMotorsSetup()  {
+
 
         Motors.LB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Motors.LF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Motors.RB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Motors.RF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Motors.LIFT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        Motors.LIFT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         Motors.LB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Motors.LF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Motors.RB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Motors.RF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Motors.LIFT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        Motors.LIFT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         Motors.LB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Motors.LF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Motors.RB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Motors.RF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Motors.LIFT.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        Motors.LIFT.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         Motors.LB.setDirection(DcMotorSimple.Direction.REVERSE);
         Motors.LF.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
-        Motors.LIFT = Robot.hMap.get(DcMotorEx.class, "lift_motor");
+        //Motors.LIFT = Robot.hMap.get(DcMotorEx.class, "lift_motor");
     }
 
-    private static void doHardwareMap() throws Exception {
+    private static void doHardwareMap()  {
         //hopefully this wont need explanation
 
-        if(Robot.hMap == null)
-            throw new Exception("Hardwaremap was null, in doHardwareMap");
+
 
         Motors.LB = Robot.hMap.get(DcMotorEx.class, "motorLB");
         Motors.LF = Robot.hMap.get(DcMotorEx.class, "motorLF");
         Motors.RB = Robot.hMap.get(DcMotorEx.class, "motorRB");
         Motors.RF = Robot.hMap.get(DcMotorEx.class, "motorRF");
-        Motors.LIFT = Robot.hMap.get(DcMotorEx.class, "lift_motor");
+      //  Motors.LIFT = Robot.hMap.get(DcMotorEx.class, "lift_motor");
 
         Robot.Gyroscope = Robot.hMap.get(BNO055IMU.class , "gyro" );
 
@@ -113,10 +107,9 @@ public class Robot {
 
     }
 
-    private static void doGyroscopeSetup() throws Exception{
+    private static void doGyroscopeSetup() {
         //some exception handling in case somehow doHardwareMap fucked up
-        if(Robot.Gyroscope == null)
-            throw new Exception("Gyroscope was null, did doHardwareMap somehow fail??");
+
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 

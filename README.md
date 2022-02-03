@@ -12,6 +12,8 @@
 
 [***Modeling and Kinematics***](https://www.hindawi.com/journals/jr/2018/9373580/) - inca il studiez pe asta dar pe scurt ii un concept de wheelchair care foloseste un model de omni pentru miscare/omni pus in practica
 
+[***All kinds of drivetrai/movements***](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/viewer.html?pdfurl=https%3A%2F%2Ffiles.andymark.com%2F2008CON-Omni-Baker-McKenzie.pdf&clen=2865825&chunk=true) - de citit interesting stuff
+
 ## onButtonTapped!!! ADI!!! l-am gasit -__-
 
 ![reference image for the onButtonTapped thing for multiple modes on a controller](/resources/onButtonTapped_reference.png)

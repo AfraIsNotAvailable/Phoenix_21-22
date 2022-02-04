@@ -51,11 +51,131 @@ public class Movement {
     }
     //motoarele is capabile sa tot mearga pana ajung la target
     //bascially functia asta face, le da target la motoare ca sa ajunga colo
-    public static void driveToTarget(int target, float power){
-        setTarget(target);
-        setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
-        setPower(power);
-        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    public static void driveCM(int cm, float Speed, int cur,int finish){
+
+        int Target = (int)((cm/(2*Math.PI*5.01)) * 28 * 18);
+        if(Target < 0) Speed = Speed*(-1);
+
+        Robot.Motors.LB.setTargetPosition(Robot.Motors.LB.getCurrentPosition() + Target);
+        Robot.Motors.RB.setTargetPosition(Robot.Motors.RB.getCurrentPosition() + Target);
+        Robot.Motors.LF.setTargetPosition(Robot.Motors.LF.getCurrentPosition() + Target);
+        Robot.Motors.RF.setTargetPosition(Robot.Motors.RF.getCurrentPosition() + Target);
+
+        Robot.Motors.RB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.Motors.LB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.Motors.RF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.Motors.LF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        setPowerForced(Speed);
+
+        while(Robot.Motors.LB.isBusy() && Robot.Motors.RB.isBusy() && Robot.Motors.LF.isBusy() && Robot.Motors.RF.isBusy()){
+            setPowerForced(Speed);
+        }
+
+        setPowerForced(0);
+
+        Robot.Motors.LF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.RF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.LB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.RB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.LF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.Motors.RF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.Motors.LB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.Motors.RB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+//        setTarget(target);
+//        setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        setPowerForced(power);
+//        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+//        if( Robot.Motors.LF.isBusy() &&
+//            Robot.Motors.RF.isBusy() &&
+//            Robot.Motors.RB.isBusy() &&
+//            Robot.Motors.LB.isBusy() &&
+//            Robot.opMode.isOpModeIsActive()
+//        ){
+//            setPowerForced(power);
+//            return cur;
+//        }
+//        else{
+//            setPowerForced(0);
+//            setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//
+//            return finish;
+//        }
+
+    }
+
+    public static void slideCM(int cm, float Speed, int cur,int finish){
+        int sign = 1;
+        int Target = (int)((cm/(2*Math.PI*5.01)) * 28 * 20);
+        if(Target < 0) Speed = Speed*(-1);
+        if(Target < 0) sign = -1;
+
+        Robot.Motors.LB.setTargetPosition(Robot.Motors.LB.getCurrentPosition() - Target);
+        Robot.Motors.RB.setTargetPosition(Robot.Motors.RB.getCurrentPosition() + Target);
+        Robot.Motors.LF.setTargetPosition(Robot.Motors.LF.getCurrentPosition() + Target);
+        Robot.Motors.RF.setTargetPosition(Robot.Motors.RF.getCurrentPosition() - Target);
+
+        Robot.Motors.RB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.Motors.LB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.Motors.RF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.Motors.LF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        setPowerForced(Speed);
+
+        while(Robot.Motors.LB.isBusy() && Robot.Motors.RB.isBusy() && Robot.Motors.LF.isBusy() && Robot.Motors.RF.isBusy()){
+            setPowerForced(Speed);
+        }
+
+        setPowerForced(0);
+
+        Robot.Motors.LF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.RF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.LB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.RB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.LF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.Motors.RF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.Motors.LB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.Motors.RB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+
+    }
+
+    public static void turn(float angle, float  Speed){
+        int Target = (int)(2157 * (angle/327.5));
+        int sign = 1;
+
+        if(Target < 0) Speed = Speed*(-1);
+        if(Target < 0) sign = -1;
+
+        Robot.Motors.LB.setTargetPosition(Robot.Motors.LB.getCurrentPosition() + Target);
+        Robot.Motors.RB.setTargetPosition(Robot.Motors.RB.getCurrentPosition() - Target);
+        Robot.Motors.LF.setTargetPosition(Robot.Motors.LF.getCurrentPosition() + Target);
+        Robot.Motors.RF.setTargetPosition(Robot.Motors.RF.getCurrentPosition() - Target);
+
+        Robot.Motors.RB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.Motors.LB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.Motors.RF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.Motors.LF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        setPowerForced(Speed);
+
+        while(Robot.Motors.LB.isBusy() && Robot.Motors.RB.isBusy() && Robot.Motors.LF.isBusy() && Robot.Motors.RF.isBusy()){
+            setPowerForced(Speed);
+        }
+
+        setPowerForced(0);
+
+        Robot.Motors.LF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.RF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.LB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.RB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.LF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.Motors.RF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.Motors.LB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.Motors.RB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     //initializeaza un thread nou care verifica constant daca conditia s-a indeplinit
@@ -85,6 +205,13 @@ public class Movement {
         Robot.Motors.RB.setPower(rb);
     }
 
+    public static void setPowerForced(double lf, double rf, double lb, double rb){
+        Robot.Motors.LF.setPower(lf);
+        Robot.Motors.RF.setPower(rf);
+        Robot.Motors.LB.setPower(lb);
+        Robot.Motors.RB.setPower(rb);
+    }
+
     public static void setVelocityForced(float lf, float rf, float lb, float rb){
         Robot.Motors.LF.setVelocity(lf, AngleUnit.RADIANS);
         Robot.Motors.RF.setVelocity(rf, AngleUnit.RADIANS);
@@ -92,6 +219,12 @@ public class Movement {
         Robot.Motors.RB.setVelocity(rb, AngleUnit.RADIANS);
     }
 
+    public static void setVelocityForced(double lf, double rf, double lb, double rb){
+        Robot.Motors.LF.setVelocity(lf, AngleUnit.RADIANS);
+        Robot.Motors.RF.setVelocity(rf, AngleUnit.RADIANS);
+        Robot.Motors.LB.setVelocity(lb, AngleUnit.RADIANS);
+        Robot.Motors.RB.setVelocity(rb, AngleUnit.RADIANS);
+    }
 
 
 }

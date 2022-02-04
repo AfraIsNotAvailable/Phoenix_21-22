@@ -22,19 +22,18 @@ public class DcMotorServo {
         this.motor = h.get(DcMotorEx.class, name);
         this.ratio = ratio;
         this.cpr = cpr;
-        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+ //       motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        motor.setTargetPositionTolerance(16);
-//
-//        motor.setTargetPosition(0);
-     //   motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+         motor.setTargetPosition(0);
+        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //
 //
 //
 //        motor.setVelocityPIDFCoefficients(1.17, .117, 0,11.7);
 //        motor.setPositionPIDFCoefficients(5);
 //
-//        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public DcMotorServo( HardwareMap h, String name, int ratio, int cpr,float ll, float ul){
@@ -52,7 +51,7 @@ public class DcMotorServo {
 
 
 
-        motor.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,new PIDFCoefficients(1.17, .117, 0,11.7));
+//        motor.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION,new PIDFCoefficients(1.17, .117, 0,11.7));
 
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
@@ -60,20 +59,27 @@ public class DcMotorServo {
     public void setAngle(float angle, float speed){
         angle = Math.max(Math.min(angle,upper_limit),lower_limit);
         target = (int)(angle * this.ratio * this.cpr)/360;
-        /*motor.setTargetPosition(
-            (int)(angle * this.ratio * this.cpr)/360
-        );*/
+        motor.setTargetPosition(
+            target
+        );
 
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        if(abs(target - motor.getCurrentPosition()) > cpr/2)
+//            if(target > motor.getCurrentPosition()){
+//                motor.setPower(speed);
+//            }else{
+//                motor.setPower(-speed);
+//            }
+//        else{
+//            target = motor.getCurrentPosition();
+//            motor.setPower(0);
+//        }
 
-        if(abs(target - motor.getCurrentPosition()) > cpr/2)
-            if(target > motor.getCurrentPosition()){
-                motor.setPower(speed);
-            }else{
-                motor.setPower(-speed);
-            }
-        else{
-            target = motor.getCurrentPosition();
+        if(motor.isBusy()){
+            motor.setPower(speed);
+        }else{
             motor.setPower(0);
+            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
     }

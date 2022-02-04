@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -28,13 +29,17 @@ public class Robot {
     public static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
 
 
+    public static Servo CUPA;
+
     public static class Motors{
         public static DcMotorEx LF = null; //1 pe poza
         public static DcMotorEx RF = null; //2 pe poza
         public static DcMotorEx LB = null; //3 pe poza
         public static DcMotorEx RB = null; //4 pe poza
 
-        public static DcMotorEx LIFT = null;
+        public static DcMotorServo LIFT = null;
+        public static DcMotorEx INTAKE = null;
+        public static DcMotorEx CARUSEL = null;
     }
 
     public static class Range{
@@ -58,6 +63,7 @@ public class Robot {
         Robot.doHardwareMap();
         Robot.doGyroscopeSetup();
         Robot.doMotorsSetup();
+        Robot.doInitSystems();
 
     }
 
@@ -140,6 +146,12 @@ public class Robot {
          }
     }
 
+    private static void doInitSystems()  {
+        Motors.INTAKE = hMap.get(DcMotorEx.class,"motorI");
+        Motors.CARUSEL = hMap.get(DcMotorEx.class,"motorC");
+        Motors.LIFT = new DcMotorServo(hMap,"motorL",13.7f,28);
+        CUPA = hMap.get(Servo.class, "servo");
+    }
     public static float getAngle(){
         Orientation angles = Robot.Gyroscope.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 

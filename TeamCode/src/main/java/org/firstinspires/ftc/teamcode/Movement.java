@@ -106,6 +106,61 @@ public class Movement {
 
     }
 
+    public static void driveCM(int cm, float Speed){
+
+        int Target = (int)((cm/31.5)*387);
+        if(Target < 0) Speed = Speed*(-1);
+
+        Robot.Motors.LB.setTargetPosition(Robot.Motors.LB.getCurrentPosition() + Target);
+        Robot.Motors.RB.setTargetPosition(Robot.Motors.RB.getCurrentPosition() + Target);
+        Robot.Motors.LF.setTargetPosition(Robot.Motors.LF.getCurrentPosition() + Target);
+        Robot.Motors.RF.setTargetPosition(Robot.Motors.RF.getCurrentPosition() + Target);
+
+        Robot.Motors.RB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.Motors.LB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.Motors.RF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.Motors.LF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        setPowerForced(Speed);
+
+        while(Robot.Motors.LB.isBusy() && Robot.Motors.RB.isBusy() && Robot.Motors.LF.isBusy() && Robot.Motors.RF.isBusy()){
+            setPowerForced(Speed);
+        }
+
+        setPowerForced(0);
+
+        Robot.Motors.LF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.RF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.LB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.RB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.Motors.LF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.Motors.RF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.Motors.LB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.Motors.RB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+//        setTarget(target);
+//        setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        setPowerForced(power);
+//        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+//        if( Robot.Motors.LF.isBusy() &&
+//            Robot.Motors.RF.isBusy() &&
+//            Robot.Motors.RB.isBusy() &&
+//            Robot.Motors.LB.isBusy() &&
+//            Robot.opMode.isOpModeIsActive()
+//        ){
+//            setPowerForced(power);
+//            return cur;
+//        }
+//        else{
+//            setPowerForced(0);
+//            setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//
+//            return finish;
+//        }
+
+    }
+
     public static void slideCM(int cm, float Speed, int cur,int finish){
         int sign = 1;
         int Target = (int)((cm/(2*Math.PI*5.01)) * 28 * 20);

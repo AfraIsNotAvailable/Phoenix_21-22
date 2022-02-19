@@ -30,20 +30,19 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.Movement;
 import org.firstinspires.ftc.teamcode.OpModeAddition;
 import org.firstinspires.ftc.teamcode.Robot;
+
+import java.util.List;
 
 /**
  * This 2020-2021 OpMode illustrates the basics of using the TensorFlow Object Detection API to
@@ -55,9 +54,9 @@ import org.firstinspires.ftc.teamcode.Robot;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@Autonomous(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
+@Autonomous(name = "test: TensorFlow Object Detection Webcam", group = "Concept")
 
-public class TestRate extends LinearOpMode implements OpModeAddition {
+public class AutoRed extends LinearOpMode implements OpModeAddition {
     /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains
      * the following 4 detectable objects
      *  0: Ball,
@@ -132,38 +131,56 @@ public class TestRate extends LinearOpMode implements OpModeAddition {
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
-
+        int c = 1;
         while(!opModeIsActive()){
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
                 telemetry.addData("# Object Detected", updatedRecognitions.size());
+                //telemetry.addData("# Type Detected", updatedRecognitions.getLabel());
                 // step through the list of recognitions and display boundary info.
                 int i = 0;
 
-                int c = 1;
+
                 for (Recognition recognition : updatedRecognitions) {
+                    telemetry.addData("GetLeft", recognition.getLeft());
+                    telemetry.addData("GetLabel", recognition.getLabel());
                     if("Duck" == recognition.getLabel()){
-                        if(recognition.getLeft() > 450){
+
+                        if(recognition.getLeft() > 240){
                             c = 3;
-                        }else if(recognition.getLeft() > 250 && recognition.getLeft() < 350){
+                        }else //if(recognition.getLeft() > 250 && recognition.getLeft() < 350){
                             c = 2;
-                        }
+                        //}
                     }
                 }
-
+                telemetry.addData("Case Detected:", c);
                 telemetry.update();
             }
         }
+        Robot.CUPA.setPosition(0);
         waitForStart();
 
-        Movement.driveCM(5,0.5f,0,0);
+        Movement.driveCM(18,0.5f,0,0);
         Movement.turn(-90,0.5f);
-        Movement.driveCM(-52,0.5f,0,0);
+        Movement.driveCM(-68,0.5f,0,0);
         double ct = clk.milliseconds();
         Robot.Motors.CARUSEL.setPower(-0.4);
         while (clk.milliseconds() < ct + 2000){}
-        Movement.turn(-147 - 180 + 360,0.5f);
-        Movement.driveCM((int)(1.25*60*Math.sqrt(2)),0.5f,0,0);
+        Movement.driveCM(110,0.5f,0,0);
+        Movement.turn(90,0.5f);
+        Movement.driveCM(40,0.5f,0,0);
+        Robot.Motors.LIFT.setAngleAuto(600,0.5f);
+        Robot.CUPA.setPosition(0.8);
+        ct = clk.milliseconds();
+        while( clk.milliseconds() < ct + 1200 && opModeIsActive()){
+
+        }
+        Robot.CUPA.setPosition(0);
+        Robot.Motors.LIFT.setAngleAuto(0,0.5f);
+        //turn
+        Movement.driveCM(-8,0.5f,0,0);
+        Movement.turn(-90,0.5f);
+        Movement.driveCM(175,0.6f,0,0);
     }
 
     /**
@@ -191,7 +208,8 @@ public class TestRate extends LinearOpMode implements OpModeAddition {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minResultConfidence = 0.6f;
+        // adrian tfodParameters.minResultConfidence = 0.3f;
+        tfodParameters.minResultConfidence = 0.4f;
         tfodParameters.isModelTensorFlow2 = true;
         tfodParameters.inputSize = 320;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
